@@ -1,5 +1,5 @@
 {
-    "host": "Set local dev websocket host here",
+    "host": "115.28.137.45",
     "port": 8000,
     "dispatcher": false
 }
