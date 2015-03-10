@@ -1,7 +1,6 @@
-
 <?php 
 namespace Server;
-class GameTypes
+class Types
 {
     public static $typesToString = array(
             'Messages' => array(
@@ -357,7 +356,7 @@ class GameTypes
             $items_kinds = array_diff($all, $forbidden);
             self::$randomItemKind = $items_kinds[array_rand($items_kinds)];
         }
-        return self::$randomItemKind;
+        return self::$randomItemKind[array_rand(self::$randomItemKind)];
     }
     
     public static function getMessageTypeAsString($type)
@@ -366,4 +365,3 @@ class GameTypes
     }
     
 }
-?>

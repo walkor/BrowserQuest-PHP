@@ -1,5 +1,6 @@
 <?php 
 namespace Server;
+
 class Entity
 {
     public $id = 0;
@@ -17,14 +18,24 @@ class Entity
         $this->y = $y;
     }
     
-    public function getState()
+    public function destroy()
+    {
+        
+    }
+    
+    public function _getBaseState()
     {
         return array(
-            $this->id,
-            $this->kind,
-            $this->x,
-            $this->y
+                $this->id,
+                $this->kind,
+                $this->x,
+                $this->y
         );
+    }
+    
+    public function getState()
+    {
+        return $this->_getBaseState();
     }
     
     public function spawn()
