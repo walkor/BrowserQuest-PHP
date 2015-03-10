@@ -3,78 +3,21 @@ namespace Server;
 
 class Chest extends Item
 {
-    public $id = 0;
-    public $x = 0;
-    public $y = 0;
-    public $width = 0;
-    public $height = 0;
-    /**
-     * @var WorldServer
-     */
-    public $world = null;
-    public $entities = array();
-    public $hasCompletelyRespawned = false;
-    public $nbEntities = 2;
-    
-    public $emptyCallback = null;
-    
-    public function __construct($id, $x, $y, $width, $height, $world)
+    public $items = null;
+    public function __construct($id, $x, $y)
     {
-        $this->id = $id;
-        $this->x = $x;
-        $this->y = $y;
-        $this->width = $width;
-        $this->height = $height;
-        $this->world = $world;
+        parent::__construct($id, TYPES_ENTITIES_CHEST, $x, $y);
     }
-    
-    public function removeFromArea($entity)
+    public function setItems($items)
     {
-        $index = array_search(Utils::pluck($this->entities, 'id'), $entity->id);
-        unset($this->entities[$index]);
+        $this->items = items;
     }
-    
-    public function addToArea($entity)
+    public function getRandomItem()
     {
-        if($entity)
-        {
-            $this->entities[] = $entity;
-            $entity->area = $this;
-            if($entity instanceof Mob)
-            {
-                $this->world->addMob($entity);
-            }
+        $item = null;
+        if(count($this->items) > 0) {
+            $item = $this->items[array_rand($this->items)];
         }
-        if($this->isFull())
-        {
-            $this->hasCompletelyRespawned = true;
-        }
-    }
-    
-    public function setNumberOfEntities($nb)
-    {
-        $this->nbEntities = $nb;
-    }
-    
-    public function isFull()
-    {
-        return !$this->isEmpty() && ($this->nbEntities === count($this->entities));
-    }
-    
-    public function isEmpty()
-    {
-        foreach ($this->entities as $entity)
-        {
-            if(!$entity->isDead)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    public function onEmpty($callback)
-    {
-        $this->emptyCallback = $callback;
+        return item;
     }
 }
