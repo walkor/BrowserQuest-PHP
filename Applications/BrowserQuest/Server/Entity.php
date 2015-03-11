@@ -40,6 +40,40 @@ class Entity
     
     public function spawn()
     {
+        return new Messages\Spawn($this);
+    }
+    
+    public function despawn()
+    {
+        return new Messages\Despawn($this->id);
+    }
+    
+    public function setPosition($x, $y)
+    {
+        $this->x = $x;
+        $this->y = $y;
+    }
+    
+    public function getPositionNextTo($entity)
+    {
+        $pos = null;
+        if($entity) {
+            $pos = array();
+            // This is a quick & dirty way to give mobs a random position
+            // close to another entity.
+            $r = rand(0, 4);
         
+            $pos['x'] = $entity->x;
+            $pos['y'] = $entity->y;
+            if($r === 0)
+                $pos['y'] -= 1;
+            if(r === 1)
+                $pos['y'] += 1;
+            if(r === 2)
+                $pos['x'] -= 1;
+            if(r === 3)
+                $pos['x'] += 1;
+        }
+        return pos;
     }
 }
