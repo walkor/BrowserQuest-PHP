@@ -37,4 +37,29 @@ class Utils
         }
         return false;
     }
+    
+    public static function detect(array $list, $callback)
+    {
+        foreach($list as $item)
+        {
+            if(call_user_func($callback, $item))
+            {
+                return $item;
+            }
+        }
+    }
+    
+    public static function sortBy(array $list, $callback)
+    {
+        usort($list, $callback);
+        return $list;
+    }
+    
+    public function distanceTo($x, $y, $x2, $y2) 
+    {
+        $distX = abs($x - $x2);
+        $distY = abs($y - $y2);
+    
+        return ($distX > $distY) ? $distX : $distY;
+    }
 }
