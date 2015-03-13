@@ -1,55 +1,114 @@
 <?php
 namespace Server;
-class Character
+class Character extends Entity
 {
-    public $formats = array();
-    public function __construct()
+    public $orientation = null;
+    public $attackers = array();
+    public $target = null;
+    public $maxHitPoints = 100;
+    public $hitPoints = 10;
+    
+    public function __construct($id, $type, $kind, $x, $y)
     {
-            $this->formats[TYPES_MESSAGES_HELLO] = array('s', 'n', 'n');
-            $this->formats[TYPES_MESSAGES_MOVE] = array('n', 'n');
-            $this->formats[TYPES_MESSAGES_LOOTMOVE] = array('n', 'n', 'n');
-            $this->formats[TYPES_MESSAGES_AGGRO] = array('n');
-            $this->formats[TYPES_MESSAGES_ATTACK] = array('n');
-            $this->formats[TYPES_MESSAGES_HIT] = array('n');
-            $this->formats[TYPES_MESSAGES_HURT] = array('n');
-            $this->formats[TYPES_MESSAGES_CHAT] = array('s');
-            $this->formats[TYPES_MESSAGES_LOOT] = array('n');
-            $this->formats[TYPES_MESSAGES_TELEPORT] = array('n', 'n');
-            $this->formats[TYPES_MESSAGES_ZONE] = array();
-            $this->formats[TYPES_MESSAGES_OPEN] = array('n');
-            $this->formats[TYPES_MESSAGES_CHECK] = array('n');
-        }
+        parent::__construct($id, $type, $kind, $x, $y);
+        
+        //@todo $this->orientation = Utils::randomOrientation();
+    }
     
-        public function check($msg) 
+    public function getState()
+    {
+        $basestate = $this->_getBaseState();
+        $state = array();
+        
+        $state[] = $this->orientation;
+        if($this->target)
         {
-            $message = $msg[0];
-            $type = $message[0];
-            $format = $this->formats[$type];
+            $state[] = $this->target;
+        }
+        
+        return array_merge($basestate, $state);
+    }
     
-            array_shift($message);
+    public function resetHitPoints($max_hit_points)
+    {
+        $this->maxHitPoints = $max_hit_points;
+        $this->hitPoints = $this->maxHitPoints;
+    }
     
-            if($format) {
-                if(message.length !== format.length) {
-                    return false;
-                }
-                for(var i = 0, n = message.length; i < n; i += 1) {
-                    if(format[i] === 'n' && !_.isNumber(message[i])) {
-                        return false;
-                    }
-                    if(format[i] === 's' && !_.isString(message[i])) {
-                        return false;
-                    }
-                }
-                return true;
+    public function regenHealthBy($value)
+    {
+        $hp = $this->hitPoints;
+        $max = $this->maxHitPoints;
+        
+        if($hp < $max) 
+        {
+            if($hp + $value <= $max) 
+            {
+                $this->hitPoints += $value;
             }
-            else if(type === TYPES_MESSAGES_WHO) {
-                // WHO messages have a variable amount of params, all of which must be numbers.
-                return message.length > 0 && _.all(message, function(param) {
-                    return _.isNumber(param) });
-            }
-            else {
-                log.error("Unknown message type: "+type);
-                return false;
+            else 
+            {
+                $this->hitPoints = $max;
             }
         }
+    }
+    
+    public function hasFullHealth()
+    {
+        return $this->hitPoints === $this->maxHitPoints;
+    }
+    
+    public function setTarget($entity) 
+    {
+        $this->target = $entity->id;
+    }
+    
+    public function clearTarget()
+    {
+        $this->target = null;
+    }
+    
+    public function hasTarget()
+    {
+        return $this->target !== null;
+    }
+    
+    public function attack()
+    {
+        return new Messages\Attack($this->id, $this->target);
+    }
+    
+    public function health()
+    {
+        return new Messages\Health($this->hitPoints, false);
+    }
+    
+    public function regen()
+    {
+        return new Messages\Health($this->hitPoints, true);
+    }
+    
+    public function addAttacker($entity)
+    {
+        if($entity)
+        {
+            $this->attackers[$entity->id] = $entity;
+        }
+    }
+    
+    public function removeAttacker($entity)
+    {
+         if($entity && isset($this->attackers[$entity->id]))
+         {
+            unset($this->attackers[$entity->id]);
+        }
+    }
+    
+    public function forEachAttacker($callback)
+    {
+        foreach($this->attackers as $id=>$item)
+        {
+            $callback($item);
+        }
+    }
 }

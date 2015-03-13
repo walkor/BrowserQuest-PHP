@@ -1,80 +1,32 @@
-<?php 
+<?php
 namespace Server;
-
-class Area
+class FormatChecker
 {
-    public $id = 0;
-    public $x = 0;
-    public $y = 0;
-    public $width = 0;
-    public $height = 0;
-    /**
-     * @var WorldServer
-     */
-    public $world = null;
-    public $entities = array();
-    public $hasCompletelyRespawned = false;
-    public $nbEntities = 2;
-    
-    public $emptyCallback = null;
-    
-    public function __construct($id, $x, $y, $width, $height, $world)
+    public $formats = array();
+    public function __construct()
     {
-        $this->id = $id;
-        $this->x = $x;
-        $this->y = $y;
-        $this->width = $width;
-        $this->height = $height;
-        $this->world = $world;
-    }
-    
-    public function removeFromArea($entity)
-    {
-        $index = array_search(Utils::pluck($this->entities, 'id'), $entity->id);
-        unset($this->entities[$index]);
-    }
-    
-    public function addToArea($entity)
-    {
-        if($entity)
-        {
-            $this->entities[] = $entity;
-            $entity->area = $this;
-            if($entity instanceof Mob)
-            {
-                $this->world->addMob($entity);
-            }
+            $this->formats[TYPES_MESSAGES_HELLO] = array('s', 'n', 'n');
+            $this->formats[TYPES_MESSAGES_MOVE] = array('n', 'n');
+            $this->formats[TYPES_MESSAGES_LOOTMOVE] = array('n', 'n', 'n');
+            $this->formats[TYPES_MESSAGES_AGGRO] = array('n');
+            $this->formats[TYPES_MESSAGES_ATTACK] = array('n');
+            $this->formats[TYPES_MESSAGES_HIT] = array('n');
+            $this->formats[TYPES_MESSAGES_HURT] = array('n');
+            $this->formats[TYPES_MESSAGES_CHAT] = array('s');
+            $this->formats[TYPES_MESSAGES_LOOT] = array('n');
+            $this->formats[TYPES_MESSAGES_TELEPORT] = array('n', 'n');
+            $this->formats[TYPES_MESSAGES_ZONE] = array();
+            $this->formats[TYPES_MESSAGES_OPEN] = array('n');
+            $this->formats[TYPES_MESSAGES_CHECK] = array('n');
         }
-        if($this->isFull())
+    
+        public function check($msg) 
         {
-            $this->hasCompletelyRespawned = true;
+            $message = $msg[0];
+            $type = $message[0];
+            $format = $this->formats[$type];
+    
+            array_shift($message);
+    
         }
-    }
-    
-    public function setNumberOfEntities($nb)
-    {
-        $this->nbEntities = $nb;
-    }
-    
-    public function isFull()
-    {
-        return !$this->isEmpty() && ($this->nbEntities === count($this->entities));
-    }
-    
-    public function isEmpty()
-    {
-        foreach ($this->entities as $entity)
-        {
-            if(!$entity->isDead)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    public function onEmpty($callback)
-    {
-        $this->emptyCallback = $callback;
-    }
 }
