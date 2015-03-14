@@ -34,10 +34,12 @@ class Item extends Entity
         if($this->blinkTimeout)
         {
             Timer::del($this->blinkTimeout);
+            $this->blinkTimeout = 0;
         }
         if($this->despawnTimeout)
         {
             Timer::del($this->despawnTimeout);
+            $this->despawnTimeout = 0;
         }
         if($this->isStatic)
         {
