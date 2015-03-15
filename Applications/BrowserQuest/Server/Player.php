@@ -430,7 +430,7 @@ class Player extends Character
     {
         Timer::del($this->disconnectTimeout);
         // 15分钟
-        $this->disconnectTimeout = Timer::add(15, array($this, 'timeout'), false);
+        $this->disconnectTimeout = Timer::add(15*60, array($this, 'timeout'), false);
     }
     
     public function timeout()
