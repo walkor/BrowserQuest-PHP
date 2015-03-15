@@ -205,7 +205,7 @@ class Map
             $connectedgroup_id = $self->getgroup_idFromPosition($door->tx, $door->ty);
             $connectedPosition = $self->group_idToGroupPosition($connectedgroup_id);
         
-            if($self->connectedGroups[$group_id]) 
+            if(isset($self->connectedGroups[$group_id])) 
             {
                 $self->connectedGroups[$group_id][] =$connectedPosition;
             } 
@@ -224,7 +224,7 @@ class Map
         array_walk($cpList, function($cp)use($self) 
         {
             $checkpoint = new Checkpoint($cp->id, $cp->x, $cp->y, $cp->w, $cp->h);
-            $self->checkpoints[$checkpoint->id] = checkpoint;
+            $self->checkpoints[$checkpoint->id] = $checkpoint;
             if($cp->s === 1) 
             {
                 $self->startingAreas[] = $checkpoint;

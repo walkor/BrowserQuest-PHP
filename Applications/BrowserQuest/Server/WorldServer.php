@@ -227,7 +227,7 @@ class WorldServer
         
         $regenCount = $this->ups * 2;
         $updateCount = 0;
-        Timer::add(1 / $this->ups, function() use ($self) 
+        Timer::add(1 / $this->ups, function() use ($self, $regenCount, &$updateCount) 
         {
             $self->processGroups();
             $self->processQueues();
