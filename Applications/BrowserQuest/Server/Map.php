@@ -28,7 +28,7 @@ class Map
     
     public function initMap()
     {
-        $file = __DIR__.'/../'.$this->filepath;
+        $file = __DIR__.'/../'.$this->filePath;
         if(!file_exists($file))
         {
             echo "$file  doesn't exist.\n";
