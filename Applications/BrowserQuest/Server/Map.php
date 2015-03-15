@@ -18,20 +18,22 @@ class Map
     public $readyFunc;
     public $connectedGroups = array();
     public $grid;
+    public $filePath;
     
     public function __construct($filepath)
     {
-        $file = __DIR__.'/../'.$filepath;
-        if(!file_exists($file))
-        {
-            echo "$filepath  doesn't exist.";
-        }
-        $json = json_decode(file_get_contents($file));
-        $this->initMap($json);
+        $this->filePath = $filepath;
     }
     
-    public function initMap($map)
+    public function initMap()
     {
+        $file = __DIR__.'/../'.$this->filepath;
+        if(!file_exists($file))
+        {
+            echo "$file  doesn't exist.\n";
+        }
+        $map = json_decode(file_get_contents($file));
+        
         $this->width = $map->width;
         $this->height = $map->height;
         $this->collisions = $map->collisions;
