@@ -225,6 +225,8 @@ class WorldServer
             }
         });
         
+        $this->map->initMap();
+        
         $regenCount = $this->ups * 2;
         $updateCount = 0;
         Timer::add(1 / $this->ups, function() use ($self, $regenCount, &$updateCount) 
