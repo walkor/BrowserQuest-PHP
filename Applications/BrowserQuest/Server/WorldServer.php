@@ -261,23 +261,23 @@ class WorldServer
 
     public function onPlayerConnect($callback) 
     {
-        $this->connect_callback = $callback;
+        $this->connectCallback = $callback;
     }
     
     public function onPlayerEnter($callback) {
-        $this->enter_callback = $callback;
+        $this->enterCallback = $callback;
     }
     
     public function onPlayerAdded($callback) {
-        $this->added_callback = $callback;
+        $this->addedCallback = $callback;
     }
     
     public function onPlayerRemoved($callback) {
-        $this->removed_callback = $callback;
+        $this->removedCallback = $callback;
     }
     
     public function onRegenTick($callback) {
-        $this->regen_callback = $callback;
+        $this->regenCallback = $callback;
     }
     
     public function pushRelevantEntityListTo($player) {
