@@ -179,11 +179,11 @@ class Types
             TYPES_ENTITIES_GOLDENARMOR =>5
     );
     
-    protected $kindsToStringMap = array();
+    protected static $kindsToStringMap = array();
     
-    protected $kindsToTypesMap = array();
+    protected static $kindsToTypesMap = array();
     
-    protected $randomItemKind = array();
+    protected static $randomItemKind = array();
     
     protected static function getKindsToStringMap()
     {
