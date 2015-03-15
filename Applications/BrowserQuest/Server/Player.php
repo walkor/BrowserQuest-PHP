@@ -1,6 +1,5 @@
 <?php 
 namespace Server;
-use \Workerman\Connection\TcpConnection;
 use \Workerman\Lib\Timer;
 
 class Player extends Character
@@ -15,8 +14,7 @@ class Player extends Character
     public $connection;
     public $server;
     
-    
-    public function __construct(TcpConnection $connection, $worldServer)
+    public function __construct($connection, $worldServer)
     {
         $this->server = $worldServer;
         $this->connection = $connection;

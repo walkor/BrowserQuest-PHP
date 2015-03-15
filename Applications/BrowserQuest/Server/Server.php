@@ -1,7 +1,8 @@
 <?php 
 namespace Server;
+use \Workerman\Worker;
 
-class Server
+class Server extends Worker
 {
     public function init($port) 
     {
@@ -44,6 +45,14 @@ class Server
     public function getConnection($id) 
     {
         return $this->_connections[id];
+    }
+    
+    public function broadcast($data)
+    {
+        foreach($this->connections as $connection)
+        {
+            $connection->send($data);
+        }
     }
 }
 
