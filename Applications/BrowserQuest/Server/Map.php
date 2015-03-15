@@ -25,7 +25,7 @@ class Map
         {
             echo "$filepath  doesn't exist.";
         }
-        $json = json_decode(file_get_contents($filepath), true);
+        $json = json_decode(file_get_contents(__DIR__.'/'.$filepath), true);
         $this->initMap($json);
     }
     
