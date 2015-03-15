@@ -149,7 +149,7 @@ class Map
         }
     }
     
-    public function getgroup_idFromPosition($x ,$y)
+    public function getGroupIdFromPosition($x ,$y)
     {
         $w = $this->zoneWidth;
         $h = $this->zoneHeight;
@@ -201,8 +201,8 @@ class Map
         $self = $this;
         array_walk($doors, function($door)use($self)
         {
-            $group_id = $self->getgroup_idFromPosition($door->x, $door->y);
-            $connectedgroup_id = $self->getgroup_idFromPosition($door->tx, $door->ty);
+            $group_id = $self->getGroupIdFromPosition($door->x, $door->y);
+            $connectedgroup_id = $self->getGroupIdFromPosition($door->tx, $door->ty);
             $connectedPosition = $self->GroupIdToGroupPosition($connectedgroup_id);
         
             if(isset($self->connectedGroups[$group_id])) 
