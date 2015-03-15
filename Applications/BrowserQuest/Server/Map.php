@@ -128,7 +128,7 @@ class Map
         return $this->grid[$y][$x] === 1;
     }
     
-    public function groupidToGroupPosition($id)
+    public function GroupIdToGroupPosition($id)
     {
         $pos_array =explode('-', $id);
         
@@ -160,7 +160,7 @@ class Map
     
     public function getAdjacentGroupPositions($id)
     {
-        $position = $this->group_idToGroupPosition(id);
+        $position = $this->GroupIdToGroupPosition(id);
         $x = $position['x'];
         $y = $position['y'];
         // surrounding groups
@@ -203,7 +203,7 @@ class Map
         {
             $group_id = $self->getgroup_idFromPosition($door->x, $door->y);
             $connectedgroup_id = $self->getgroup_idFromPosition($door->tx, $door->ty);
-            $connectedPosition = $self->group_idToGroupPosition($connectedgroup_id);
+            $connectedPosition = $self->GroupIdToGroupPosition($connectedgroup_id);
         
             if(isset($self->connectedGroups[$group_id])) 
             {
