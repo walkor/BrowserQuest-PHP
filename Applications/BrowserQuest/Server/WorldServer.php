@@ -33,9 +33,9 @@ class WorldServer
     
     public function __construct($id, $maxPlayers, $websocketServer)
     {
-        $this->id = id;
-        $this->maxPlayers = maxPlayers;
-        $this->server = websocketServer;
+        $this->id = $id;
+        $this->maxPlayers = $maxPlayers;
+        $this->server = $websocketServer;
         $this->ups = 50;
         $this->map = null;
         $this->entities = array();
