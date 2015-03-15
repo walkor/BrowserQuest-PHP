@@ -5,6 +5,8 @@ use \Server\Utils;
 use \Server\Player;
 use \Server\WorldServer;
 
+\Workerman\Autoloader::setRootPath(__DIR__);
+
 $server = new \Server\Server();
 $config = json_decode(file_get_contents(__DIR__ . '/config.json'), true);
 $worlds = array();

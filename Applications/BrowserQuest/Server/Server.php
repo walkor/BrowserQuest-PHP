@@ -19,11 +19,6 @@ class Server extends Worker
         $this->errorCallback = $callback;
     }
     
-    public function broadcast($message) 
-    {
-        throw new \Exception("Not implemented");
-    }
-    
     public function forEachConnection($callback) 
     {
         foreach($this->_connections as $con)
