@@ -34,8 +34,8 @@ class Area
         $valid = false;
         
         while(!$valid) {
-            $pos['x'] = $this->x + rand($this->width + 1);
-            $pos['y'] = $this->y + rand($this->height + 1);
+            $pos['x'] = $this->x + rand(0, $this->width + 1);
+            $pos['y'] = $this->y + rand(0, $this->height + 1);
             $valid = $this->world->isValidPosition($pos['x'], $pos['y']);
         }
         return $pos;
