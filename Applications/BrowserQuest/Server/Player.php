@@ -26,7 +26,7 @@ class Player extends Character
         $this->formatChecker = new FormatChecker();
         $this->disconnectTimeout = null;
         $this->connection->onMessage = array($this, 'onClientMessage');
-        $this->connection->onClose = array($this, 'onClientlose');
+        $this->connection->onClose = array($this, 'onClientclose');
         $this->connection->onWebSocketConnect = function($con)
         {
             $con->send('go');
