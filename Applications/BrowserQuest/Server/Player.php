@@ -24,7 +24,7 @@ class Player extends Character
         $this->haters = array();
         $this->lastCheckpoint = null;
         $this->formatChecker = new FormatChecker();
-        $this->disconnectTimeout = null;
+        $this->disconnectTimeout = 0;
         $this->connection->onMessage = array($this, 'onClientMessage');
         $this->connection->onClose = array($this, 'onClientclose');
         $this->connection->onWebSocketConnect = function($con)
@@ -143,7 +143,7 @@ class Player extends Character
                 if($this->hitPoints <= 0) 
                 {
                     $this->isDead = true;
-                    if($this->firepotionTimeout) 
+                    if(!empty($this->firepotionTimeout)) 
                     {
                         Timer::del($this->firepotionTimeout);
                         $this->firepotionTimeout = 0;
@@ -238,14 +238,14 @@ class Player extends Character
     
     public function onClientClose()
     {
-        if($this->firepotionTimeout) 
+        if(!empty($this->firepotionTimeout)) 
         {
             Timer::del($this->firepotionTimeout);
             $this->firepotionTimeout = 0;
         }
         Timer::del($this->disconnectTimeout);
         $this->disconnectTimeout = 0;
-        if($this->exitCallback) 
+        if(isset($this->exitCallback)) 
         {
             call_user_func($this->exitCallback);
         }
@@ -254,7 +254,7 @@ class Player extends Character
     public function firepotionTimeoutCallback()
     {
         $this->broadcast($this->equip($this->armor)); // return to normal after 15 sec
-        $this->firepotionTimeout = null;
+        $this->firepotionTimeout = 0;
     }
     
     public function destroy()
