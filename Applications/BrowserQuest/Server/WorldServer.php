@@ -852,7 +852,7 @@ class WorldServer
         
         if($entity && $groupId && (isset($this->groups[$groupId]))) 
         {
-            $this->map->forEachAdjacentGroup($groupId, function($id) use ($self, $newGroups, $entity, $groupId)
+            $this->map->forEachAdjacentGroup($groupId, function($id) use ($self, &$newGroups, $entity, $groupId)
             {
                 $self->groups[$id]->entities[$entity->id] = $entity;
                 $newGroups[] = $id;
