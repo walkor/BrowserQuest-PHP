@@ -1,9 +1,11 @@
 <?php 
 namespace Server;
 use \Workerman\Worker;
+use \Workerman\Lib\Timer;
+
 require_once __DIR__ . 'Constants.php';
 
-class WorldServer extends Worker
+class WorldServer 
 {
     public $id;
     public $maxPlayers;
@@ -29,11 +31,222 @@ class WorldServer extends Worker
     public $zoneGroupsReady;
     
     
-    
-    public function __construct($socket_name)
+    public function __construct($id, $maxPlayers, $websocketServer)
     {
-        $this->onConnect = array($this, 'onConnect');
-        parent::__construct($socket_name);
+        $this->id = id;
+        $this->maxPlayers = maxPlayers;
+        $this->server = websocketServer;
+        $this->ups = 50;
+        $this->map = null;
+        $this->entities = array();
+        $this->players = array();
+        $this->mobs =array();
+        $this->attackers = array();
+        $this->items = array();
+        $this->equipping = array();
+        $this->hurt = array();
+        $this->npcs = array();
+        $this->mobAreas = array();
+        $this->chestAreas = array();
+        $this->groups = array();
+        
+        $this->outgoingQueues = array();
+        
+        $this->itemCount = 0;
+        $this->playerCount = 0;
+        
+        $this->zoneGroupsReady = false;
+        $self = $this;
+        $this->onPlayerConnect(function ($player)use($self)
+        {
+            $player->onRequestPosition(function()use($self) 
+            {
+                if($player->lastCheckpoint) 
+                {
+                    return $player->lastCheckpoint->getRandomPosition();
+                } else {
+                    return $self->map->getRandomStartingPosition();
+                }
+            });
+        });
+        
+        $this->onPlayerEnter(
+                function($player) use ($self)
+                {
+                    echo $player->name . " has joined ". $self->id;
+                
+                    if(!$player->hasEnteredGame) 
+                    {
+                        $self->incrementPlayerCount();
+                    }
+                
+                    // Number of players in this world
+                    $self->pushToPlayer($player, new Messages\Population($self->playerCount));
+                    $self->pushRelevantEntityListTo($player);
+                
+                    $moveCallback = function($x, $y) use($player, $self)
+                    {
+                        echo $player->name . " is moving to (" . $x . ", " . $y . ").";
+                
+                        $player->forEachAttacker(function($mob) use($player, $self)
+                        {
+                            $target = $self->getEntityById($mob->target);
+                            if($target) 
+                            {
+                                $pos = $self->findPositionNextTo($mob, $target);
+                                if($mob->distanceToSpawningPoint($pos['x'], $pos['y']) > 50) 
+                                {
+                                    $mob->clearTarget();
+                                    $mob->forgetEveryone();
+                                    $player->removeAttacker($mob);
+                                } 
+                                else 
+                                {
+                                    $self->moveEntity($mob, $pos['x'], $pos['y']);
+                                }
+                            }
+                        });
+                    };
+                
+                    $player->onMove($moveCallback);
+                    $player->onLootMove($moveCallback);
+                
+                    $player->onZone(function() use($self, $player)
+                    {
+                        $hasChangedGroups = $self->handleEntityGroupMembership($player);
+                
+                        if($hasChangedGroups) 
+                        {
+                            $self->pushToPreviousGroups($player, new Messages\Destroy($player));
+                            $self->pushRelevantEntityListTo($player);
+                        }
+                    });
+                
+                    $player->onBroadcast(function($message, $ignoreSelf) use($self, $player)
+                    {
+                        $self->pushToAdjacentGroups($player->group, $message, $ignoreSelf ? $player->id : null);
+                    });
+                
+                    $player->onBroadcastToZone(function($message, $ignoreSelf) use($self, $player)
+                    {
+                        $self->pushToGroup($player->group, $message, $ignoreSelf ? $player->id : null);
+                    });
+                
+                    $player->onExit(function() use($self, $player)
+                    {
+                        echo $player->name . " has left the game.\n";
+                        $self->removePlayer($player);
+                        $self->decrementPlayerCount();
+                
+                        if($self->removedCallback) 
+                        {
+                            call_user_func($self->removedCallback);
+                        }
+                    });
+                
+                    if($self->addedCallback) 
+                    {
+                        call_user_func($self->addedCallback);
+                    }
+                }
+            );
+        
+        $this->onEntityAttack(function($attacker) use($self)
+        {
+            $target = $self->getEntityById($attacker->target);
+            if($target && $attacker->type === "mob") 
+            {
+                $pos = $self->findPositionNextTo($attacker, $target);
+                $self->moveEntity($attacker, $pos['x'], $pos['y']);
+            }
+        });
+        
+        $this->onRegenTick(function() use ($self)
+        {
+            $self->forEachCharacter(function($character) use ($self)
+            {
+                if(!$character->hasFullHealth()) 
+                {
+                    $character->regenHealthBy(floor($character->maxHitPoints / 25));
+                    if($character->type === 'player') 
+                    {
+                        $self->pushToPlayer($character, $character->regen());
+                    }
+                }
+            });
+        });
+    }
+   
+    public function run($mapFilePath)
+    {
+        $self = $this;
+        
+        $this->map = new Map($mapFilePath);
+        
+        $this->map->ready(function() use ($self) 
+        {
+            $self->initZoneGroups();
+        
+            $self->map->generateCollisionGrid();
+        
+            // Populate all mob "roaming" areas
+            foreach($self->map->mobAreas as $a)
+            {
+                $area = new MobArea($a->id, $a->nb, $a->type, $a->x, $a->y, $a->width, $a->height, $self);
+                $area->spawnMobs();
+                // @todo bind
+                $area->onEmpty($self->handleEmptyMobArea->bind($self, area));
+                $self->mobAreas =  $area;
+            }
+            
+            // Create all chest areas
+            foreach($self->map->chestAreas as $a)
+            {
+                $area = new ChestArea($a->id, $a->x, $a->y, $a->w, $a->h, $a->tx, $a->ty, $a->i, $self);
+                $self->chestAreas[] = $area;
+                // @todo bind
+                $area->onEmpty($self->handleEmptyChestArea->bind($self, $area));
+            }
+        
+            // Spawn static chests
+            foreach($self->map->staticChests as $chest)
+            {
+                $c = $self->createChest($chest->x, $chest->y, $chest->i);
+                $self->addStaticItem($c);
+            }
+        
+            // Spawn static entities
+            $self->spawnStaticEntities();
+        
+            // Set maximum number of entities contained in each chest area
+            foreach($slef->chestAreas as $area)
+            {
+                $area->setNumberOfEntities(count($area->entities));
+            }
+        });
+        
+        $regenCount = $this->ups * 2;
+        $updateCount = 0;
+        Timer::add(1 / $this->ups, function() use ($self) 
+        {
+            $self->processGroups();
+            $self->processQueues();
+        
+            if($updateCount < $regenCount) 
+            {
+                $updateCount += 1;
+            } 
+            else 
+            {
+                if($self->regenCallback) 
+                {
+                    call_user_func($self->regenCallback);
+                }
+                $updateCount = 0;
+            }
+        });
+        
+        echo $this->id." created (capacity: ".$this->maxPlayers." players \n";
     }
     
     public function setUpdatesPerSecond($ups) 
@@ -558,7 +771,7 @@ class WorldServer extends Worker
         
         while(!$valid) 
         {
-            $pos = entity->getPositionNextTo($target);
+            $pos = $entity->getPositionNextTo($target);
             $valid = $this->isValidPosition($pos['x'], $pos['y']);
         }
         return pos;
@@ -721,64 +934,79 @@ class WorldServer extends Worker
         }
     }
     
-    moveEntity: function(entity, x, y) {
-        if(entity) {
-            entity.setPosition(x, y);
-            $this->handleEntityGroupMembership(entity);
+    public function moveEntity($entity, $x, $y) 
+    {
+        if($entity) 
+        {
+            $entity->setPosition($x, $y);
+            $this->handleEntityGroupMembership($entity);
         }
     }
     
-    handleItemDespawn: function(item) {
-        var self = this;
+    public function handleItemDespawn($item) 
+    {
+        $self = $this;
         
-        if(item) {
-            item.handleDespawn({
-                beforeBlinkDelay: 10000,
-                blinkCallback: function() {
-                    $this->pushToAdjacentGroups(item.group, new Messages.Blink(item));
+        if($item) 
+        {
+            $item->handleDespawn(array(
+                'beforeBlinkDelay'=>10000,
+                'blinkCallback'=> function()use($self, $item){
+                    $self->pushToAdjacentGroups($item->group, new Messages\Blink($item));
+                },
+                'blinkingDuration'=> 4000,
+                'despawnCallback'=> function()use($self, $item) {
+                    $self->pushToAdjacentGroups($item->group, new Messages\Destroy($item));
+                    $self->removeEntity($item);
                 }
-                blinkingDuration: 4000,
-                despawnCallback: function() {
-                    $this->pushToAdjacentGroups(item.group, new Messages.Destroy(item));
-                    $this->removeEntity(item);
-                }
-            });
+            ));
         }
+        
     }
     
-    handleEmptyMobArea: function(area) {
+    public function handleEmptyMobArea($area) 
+    {
 
     }
     
-    handleEmptyChestArea: function(area) {
-        if(area) {
-            var chest = $this->addItem($this->createChest(area.chestX, area.chestY, area.items));
-            $this->handleItemDespawn(chest);
+    public function handleEmptyChestArea($area) 
+    {
+        if($area) 
+        {
+            $chest = $this->addItem($this->createChest($area->chestX, $area->chestY, $area->items));
+            $this->handleItemDespawn($chest);
         }
     }
     
-    handleOpenedChest: function(chest, player) {
-        $this->pushToAdjacentGroups(chest.group, chest.despawn());
-        $this->removeEntity(chest);
+    public function handleOpenedChest($chest, $player) 
+    {
+        $this->pushToAdjacentGroups($chest->group, $chest->despawn());
+        $this->removeEntity($chest);
         
-        var kind = chest.getRandomItem();
-        if(kind) {
-            var item = $this->addItemFromChest(kind, chest.x, chest.y);
-            $this->handleItemDespawn(item);
+        $kind = $chest->getRandomItem();
+        if($kind) 
+        {
+            $item = $this->addItemFromChest($kind, $chest->x, $chest->y);
+            $this->handleItemDespawn($item);
         }
     }
     
-    tryAddingMobToChestArea: function(mob) {
-        _.each($this->chestAreas, function(area) {
-            if(area.contains(mob)) {
-                area.addToArea(mob);
+    public function tryAddingMobToChestArea($mob) 
+    {
+        foreach($this->chestAreas as $area)
+        {
+            if(in_array($mob, $area))
+            {
+                $area->addToArea($mob);
             }
-        });
+        }
     }
     
-    updatePopulation: function(totalPlayers) {
-        $this->pushBroadcast(new Messages.Population($this->playerCount, totalPlayers ? totalPlayers : $this->playerCount));
+    public function updatePopulation($totalPlayers) 
+    {
+        $this->pushBroadcast(new Messages\Population($this->playerCount, $totalPlayers ? $totalPlayers : $this->playerCount));
     }
+    
     public function onConnect($connection)
     {
         $connection->onWebSocketConnect = array($this, 'onWebSocketConnect');

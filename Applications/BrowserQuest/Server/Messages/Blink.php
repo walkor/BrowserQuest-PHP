@@ -1,7 +1,7 @@
 <?php 
 namespace Server\Messages;
 
-class Destroy
+class Blink
 {
     public $entity = null;
     public function __construct($entity)
