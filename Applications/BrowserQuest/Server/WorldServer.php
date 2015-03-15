@@ -3,7 +3,7 @@ namespace Server;
 use \Workerman\Worker;
 use \Workerman\Lib\Timer;
 
-require_once __DIR__ . 'Constants.php';
+require_once __DIR__ . '/Constants.php';
 
 class WorldServer 
 {

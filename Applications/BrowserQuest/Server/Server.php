@@ -2,7 +2,7 @@
 namespace Server;
 use \Workerman\Worker;
 
-class Server extends Worker
+class Server
 {
     public function init($port) 
     {
