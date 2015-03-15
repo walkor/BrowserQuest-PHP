@@ -23,6 +23,7 @@ class Map
     public function __construct($filepath)
     {
         $this->filePath = $filepath;
+        $this->isLoaded = false;
     }
     
     public function initMap()
@@ -36,11 +37,11 @@ class Map
         
         $this->width = $map->width;
         $this->height = $map->height;
-        $this->collisions = $map->collisions;
-        $this->mobAreas = $map->roamingAreas;
-        $this->chestAreas = $map->chestAreas;
-        $this->staticChests = $map->staticChests;
-        $this->staticEntities = $map->staticEntities;
+        $this->collisions = (array)$map->collisions;
+        $this->mobAreas = (array)$map->roamingAreas;
+        $this->chestAreas = (array)$map->chestAreas;
+        $this->staticChests =(array) $map->staticChests;
+        $this->staticEntities = (array)$map->staticEntities;
         $this->isLoaded = true;
         
         // zone groups
