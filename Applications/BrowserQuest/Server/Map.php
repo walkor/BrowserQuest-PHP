@@ -26,7 +26,7 @@ class Map
         {
             echo "$filepath  doesn't exist.";
         }
-        $json = json_decode(file_get_contents($file), true);
+        $json = json_decode(file_get_contents($file));
         $this->initMap($json);
     }
     
@@ -198,19 +198,20 @@ class Map
     public function initConnectedGroups($doors)
     {
         $this->connectedGroups = array();
-        array_walk($doors, function($door) 
+        $self = $this;
+        array_walk($doors, function($door)use($self)
         {
-            $group_id = $this->getgroup_idFromPosition($door['x'], $door['y']);
-            $connectedgroup_id = $this->getgroup_idFromPosition($door['tx'], $door['ty']);
-            $connectedPosition = $this->group_idToGroupPosition($connectedgroup_id);
+            $group_id = $self->getgroup_idFromPosition($door->x, $door->y);
+            $connectedgroup_id = $self->getgroup_idFromPosition($door->tx, $door->ty);
+            $connectedPosition = $self->group_idToGroupPosition($connectedgroup_id);
         
-            if($this->connectedGroups[$group_id]) 
+            if($self->connectedGroups[$group_id]) 
             {
-                $this->connectedGroups[$group_id][] =$connectedPosition;
+                $self->connectedGroups[$group_id][] =$connectedPosition;
             } 
             else 
             {
-                $this->connectedGroups[$group_id] = array($connectedPosition);
+                $self->connectedGroups[$group_id] = array($connectedPosition);
             }
         });
     }
@@ -219,14 +220,14 @@ class Map
     {
         $this->checkpoints = array();
         $this->startingAreas = array();
-        
-        array_walk($cpList, function($cp) 
+        $self = $this;
+        array_walk($cpList, function($cp)use($self) 
         {
             $checkpoint = new Checkpoint($cp->id, $cp->x, $cp->y, $cp->w, $cp->h);
-            $this->checkpoints[$checkpoint->id] = checkpoint;
+            $self->checkpoints[$checkpoint->id] = checkpoint;
             if($cp->s === 1) 
             {
-                $this->startingAreas[] = $checkpoint;
+                $self->startingAreas[] = $checkpoint;
             }
         });
     }
