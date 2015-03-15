@@ -39,10 +39,6 @@ $ws_worker->onConnect = function($connection) use ($server, $config, $worlds)
     }
 };
 
-$ws_worker->onMessage = function($connection, $data)
-{
-    
-};
 
 // WebServer
 $web = new WebServer("http://0.0.0.0:8787");
