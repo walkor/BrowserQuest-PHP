@@ -160,35 +160,36 @@ class Map
     
     public function getAdjacentGroupPositions($id)
     {
-        $position = $this->GroupIdToGroupPosition(id);
+        $position = $this->GroupIdToGroupPosition($id);
         $x = $position['x'];
         $y = $position['y'];
         // surrounding groups
         $list = array(array('x'=>$x-1, 'y'=>$y-1), array('x'=>$x, 'y'=>$y-1), array('x'=>$x+1, 'y'=>$y-1),
         array('x'=>$x-1, 'y'=>$y), array('x'=>$x, $y), array($x+1, $y),
-        array('x'=>$x-1, 'y'=>$y+1), array('x'=>$x, 'y'=>y+1), array('x'=>$x+1, 'y'=>$y+1));
+        array('x'=>$x-1, 'y'=>$y+1), array('x'=>$x, 'y'=>$y+1), array('x'=>$x+1, 'y'=>$y+1));
         
         // groups connected via doors
-        array_walk($this->connectedGroups[$id], function ($key, $position){
+        $self = $this;
+        array_walk($this->connectedGroups[$id], function ($key, $position) use (&$list, $self){
             // don't add a connected group if it's already part of the surrounding ones.
-            if(Utils::any($list, function($group_pos) {
-                return $this->equalPositions($group_pos, $position);
+            if(Utils::any($list, function($group_pos)use($position, $self) {
+                return $self->equalPositions($group_pos, $position);
             })) 
             {
                 $list[] = $position;
             }
         });
         
-        return Utils::reject($list, function($pos) 
+        return Utils::reject($list, function($pos)use($self) 
         {
-            return $pos['x'] < 0 || $pos['y'] < 0 || $pos['x'] >= $this->groupWidth || $pos['y'] >= $this->groupHeight;
+            return $pos['x'] < 0 || $pos['y'] < 0 || $pos['x'] >= $self->groupWidth || $pos['y'] >= $self->groupHeight;
         });
     }
     
     public function forEachAdjacentGroup($group_id, $callback)
     {
         if($group_id) {
-            array_walk($this->getAdjacentGroupPositions($group_id), function($pos) 
+            array_walk($this->getAdjacentGroupPositions($group_id), function($pos)use($callback) 
             {
                 call_user_func($callback, $pos['x'].'-'.$pos['y']);
             });
@@ -246,7 +247,7 @@ class Map
         return $area->getRandomPosition();
     }
     
-    protected function equalPositions($pos1, $pos2)
+    public function equalPositions($pos1, $pos2)
     {
         return $pos1['x'] === $pos2['x'] && $pos2['y'] === $pos2['y'];
     }

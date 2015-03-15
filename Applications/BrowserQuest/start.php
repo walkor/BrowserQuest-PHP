@@ -35,7 +35,6 @@ $ws_worker->onConnect = function($connection) use ($server, $config, $worlds)
     $world->updatePopulation(null);
     if($world && isset($world->connectCallback))
     {
-        var_export($world->connectCallback);
         call_user_func($world->connectCallback, new Player($connection, $world));
     }
 };

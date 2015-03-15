@@ -68,11 +68,11 @@ class Utils
         $r = rand(0, 4);
         if($r === 0)
             return TYPES_ORIENTATIONS_LEFT;
-        if(r === 1)
+        if($r === 1)
             return TYPES_ORIENTATIONS_RIGHT;
-        if(r === 2)
+        if($r === 2)
             return TYPES_ORIENTATIONS_UP;
-        if(r === 3)
+        if($r === 3)
             return TYPES_ORIENTATIONS_DOWN;
     }
     

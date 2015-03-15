@@ -59,7 +59,7 @@ class WorldServer
         $self = $this;
         $this->onPlayerConnect(function ($player)use($self)
         {
-            $player->onRequestPosition(function()use($self) 
+            $player->onRequestPosition(function()use($self, $player) 
             {
                 if($player->lastCheckpoint) 
                 {
@@ -144,7 +144,7 @@ class WorldServer
                         }
                     });
                 
-                    if($self->addedCallback) 
+                    if(isset($self->addedCallback)) 
                     {
                         call_user_func($self->addedCallback);
                     }
@@ -792,10 +792,10 @@ class WorldServer
     
     public function removeFromGroups($entity) 
     {
-       $self = $this;
+        $self = $this;
         $oldGroups = array();
         
-        if($entity && $entity->group) 
+        if($entity && isset($entity->group)) 
         {
             $group = $this->groups[$entity->group];
             if($entity instanceof Player) 
@@ -829,10 +829,10 @@ class WorldServer
         
         if($entity && $groupId) 
         {
-            $this->map->forEachAdjacentGroup($groupId, function($id) use ($self, $isChest, $isItem, $isDroppedItem)
+            $this->map->forEachAdjacentGroup($groupId, function($id) use ($self, $isChest, $isItem, $isDroppedItem, $entity)
             {
-                $group = $self->groups[id];
-                if(group) 
+                $group = $self->groups[$id];
+                if($group) 
                 {
                     if(!in_array($entity->id, $group->entities)
                     //  Items dropped off of mobs are handled differently via DROP messages. See handleHurtEntity.
@@ -878,7 +878,7 @@ class WorldServer
         if($entity) 
         {
             $groupId = $this->map->getGroupIdFromPosition($entity->x, $entity->y);
-            if(!$entity->group || ($entity->group && $entity->group !== $groupId)) 
+            if(empty($entity->group) || ($entity->group && $entity->group !== $groupId)) 
             {
                 $hasChangedGroups = true;
                 $this->addAsIncomingToGroup($entity, $groupId);
