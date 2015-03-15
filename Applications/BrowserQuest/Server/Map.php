@@ -128,7 +128,7 @@ class Map
         return $this->grid[$y][$x] === 1;
     }
     
-    public function group_idToGroupPosition($id)
+    public function groupidToGroupPosition($id)
     {
         $pos_array =explode('-', $id);
         
