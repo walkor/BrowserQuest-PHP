@@ -16,7 +16,7 @@ class Map
     public $groupWidth;
     public $groupHeight;
     public $readyFunc;
-    
+    public $connectedGroups = array();
     public $grid;
     
     public function __construct($filepath)
@@ -189,7 +189,8 @@ class Map
     
     public function forEachAdjacentGroup($group_id, $callback)
     {
-        if($group_id) {
+        if($group_id) 
+        {
             array_walk($this->getAdjacentGroupPositions($group_id), function($pos)use($callback) 
             {
                 call_user_func($callback, $pos['x'].'-'.$pos['y']);
@@ -199,7 +200,6 @@ class Map
     
     public function initConnectedGroups($doors)
     {
-        $this->connectedGroups = array();
         $self = $this;
         array_walk($doors, function($door)use($self)
         {
