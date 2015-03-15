@@ -147,7 +147,7 @@ class Map
         {
             for($y = 0; $y < $height; $y += 1) 
             {
-                call_user_func($x.'-'.$y);
+                call_user_func($callback, $x.'-'.$y);
             }
         }
     }
