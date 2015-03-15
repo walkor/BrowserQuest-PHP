@@ -60,7 +60,7 @@ class Player extends Character
             $this->server->addPlayer($this);
             call_user_func($this->server->enterCallback, $this);
             
-            $this->connection->send(json_encode(array(TYPES_MESSAGES_HELLO, $this->id, $this->name, $this->x, $this->y, $this->hitPoints)));
+            $this->connection->send(json_encode(array(TYPES_MESSAGES_WELCOME, $this->id, $this->name, $this->x, $this->y, $this->hitPoints)));
             $this->hasEnteredGame = true;
             $this->isDead = false;
         }
