@@ -3,9 +3,18 @@ use \Workerman\WebServer;
 use \Workerman\Worker;
 use \Server\Utils;
 use \Server\Player;
+use \Server\WorldServer;
 
 $server = new \Server\Server();
 $config = json_decode(file_get_contents(__DIR__ . '/config.json'), true);
+$worlds = array();
+
+foreach(range(0, $config['nb_worlds']) as $i)
+{
+    $world = new WorldServer('world'. ($i+1), $config['nb_players_per_world'], $server);
+    $world->run($config['map_filepath']);
+    $worlds[] = $world;
+}
 
 $ws_worker = new Worker('Websocket://0.0.0.0:8000');
 $ws_worker->onConnect = function($connection) use ($server, $config)
@@ -25,7 +34,6 @@ $ws_worker->onConnect = function($connection) use ($server, $config)
     {
         call_user_func($world->connectCallback, new Player($connection, $world));
     }
-    
 };
 
 $ws_worker->onMessage = function($connection, $data)
