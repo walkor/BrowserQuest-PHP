@@ -19,21 +19,23 @@ foreach(range(0, $config['nb_worlds']) as $i)
 }
 
 $ws_worker = new Worker('Websocket://0.0.0.0:8000');
-$ws_worker->onConnect = function($connection) use ($server, $config)
+$ws_worker->onConnect = function($connection) use ($server, $config, $worlds)
 {
     $connection->id = (int)$connection->getSocket();
     $connection->server = $server;
     //$server->addConnection($connection);
-    if($server->connectionCallback)
+    if(isset($server->connectionCallback))
     {
         call_user_func($server->connectionCallback);
     }
-    $world = Utils::detect(worlds, function($world) 
+    $world = Utils::detect($worlds, function($world)use($config) 
     {
-        return $world->playerCount < $config->nb_players_per_world;
+        return $world->playerCount < $config['nb_players_per_world'];
     });
-    if($world && $world->connectCallback)
+    $world->updatePopulation(null);
+    if($world && isset($world->connectCallback))
     {
+        var_export($world->connectCallback);
         call_user_func($world->connectCallback, new Player($connection, $world));
     }
 };

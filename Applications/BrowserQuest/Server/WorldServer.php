@@ -350,7 +350,7 @@ class WorldServer
         $player->recentlyLeftGroups = array();
     }
     
-    public function pushBroadcast($message, $ignoredPlayer) 
+    public function pushBroadcast($message, $ignoredPlayer = null) 
     {
         foreach($this->outgoingQueues as $id=>$item)
         {
