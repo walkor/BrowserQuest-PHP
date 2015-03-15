@@ -21,11 +21,12 @@ class Map
     
     public function __construct($filepath)
     {
-        if(!file_exists($filepath))
+        $file = __DIR__.'/../'.$filepath;
+        if(!file_exists($file))
         {
             echo "$filepath  doesn't exist.";
         }
-        $json = json_decode(file_get_contents(__DIR__.'/../'.$filepath), true);
+        $json = json_decode(file_get_contents($file), true);
         $this->initMap($json);
     }
     
