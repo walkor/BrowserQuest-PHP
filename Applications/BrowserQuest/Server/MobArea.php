@@ -31,7 +31,7 @@ class MobArea extends Area
         $mob = new Mob('1' . $this->id . ''. k + ''. $this->entities->length, $k, $pos['x'], $pos['y']);
         
         // @todo bind
-        $mob->onMove($this->world->onMobMoveCallback->bind($this->world));
+        $mob->onMove(array($this->world, $this->world->onMobMoveCallback));
 
         return mob;
     }

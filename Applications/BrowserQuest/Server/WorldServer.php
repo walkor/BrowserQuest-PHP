@@ -205,7 +205,8 @@ class WorldServer
                 $area = new ChestArea($a->id, $a->x, $a->y, $a->w, $a->h, $a->tx, $a->ty, $a->i, $self);
                 $self->chestAreas[] = $area;
                 // @todo bind
-                $area->onEmpty($self->handleEmptyChestArea->bind($self, $area));
+                //$self->$area
+                $area->onEmpty(array($self, $self->handleEmptyChestArea));
             }
         
             // Spawn static chests
