@@ -3,7 +3,7 @@ namespace Server;
 
 class Properties
 {
-    public $properties = array(
+    public static $properties = array(
             'rat'=> array(
                 'drops'=> array(
                     'flask'=> 40,
