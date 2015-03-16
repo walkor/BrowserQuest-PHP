@@ -81,12 +81,12 @@ class WorldServer
                     }
                 
                     // Number of players in this world
-                    $self->pushToPlayer($player, new Messages\Population($self->playerCount));
+                    $self->pushToPlayer($player, new Messages\Population($self->playerCount, 1));
                     $self->pushRelevantEntityListTo($player);
                 
                     $moveCallback = function($x, $y) use($player, $self)
                     {
-                        echo $player->name . " is moving to (" . $x . ", " . $y . ").";
+                        echo $player->name . " is moving to (" . $x . ", " . $y . ")\n";
                 
                         $player->forEachAttacker(function($mob) use($player, $self)
                         {
@@ -224,7 +224,7 @@ class WorldServer
             $self->spawnStaticEntities();
         
             // Set maximum number of entities contained in each chest area
-            foreach($slef->chestAreas as $area)
+            foreach($self->chestAreas as $area)
             {
                 $area->setNumberOfEntities(count($area->entities));
             }
@@ -324,7 +324,7 @@ class WorldServer
         $group = $this->groups[$groupId];
         if($group) 
         {
-            foreach($group['players'] as $playerId)
+            foreach($group->players as $playerId)
             {
                 if($playerId != $ignoredPlayer) 
                 {
@@ -872,7 +872,7 @@ class WorldServer
             
             if($entity instanceof Player) 
             {
-                $slef->groups[$groupId]->players[] = $entity->id;
+                $self->groups[$groupId]->players[] = $entity->id;
             }
         }
         return $newGroups;
