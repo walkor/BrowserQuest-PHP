@@ -289,7 +289,7 @@ class WorldServer
     
     public function pushRelevantEntityListTo($player) {
         if($player && isset($this->groups[$player->group])) {
-            $entities = array_keys($this->groups[$player->group].entities);
+            $entities = array_keys($this->groups[$player->group]->entities);
             $entities = Utils::reject($entities, function($id) { return $id == $player->id; });
             //$entities = array_map(function($id) { return intval($id); }, $entities);
             if(entities) 
