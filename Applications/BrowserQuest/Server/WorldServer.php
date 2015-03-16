@@ -234,7 +234,7 @@ class WorldServer
         
         $regenCount = $this->ups * 2;
         $updateCount = 0;
-        Timer::add(1 / $this->ups, function() use ($self, $regenCount, &$updateCount) 
+        Timer::add(1/$this->ups, function() use ($self, $regenCount, &$updateCount) 
         {
             $self->processGroups();
             $self->processQueues();
@@ -324,7 +324,7 @@ class WorldServer
         $group = $this->groups[$groupId];
         if($group) 
         {
-            foreach($goup->players as $playerId)
+            foreach($group['players'] as $playerId)
             {
                 if($playerId != $ignoredPlayer) 
                 {
