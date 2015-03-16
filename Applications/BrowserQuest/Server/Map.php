@@ -64,7 +64,7 @@ class Map
         $this->readyFunc = $callback;
     }
     
-    public function tile_indexToGridPosition($tile_num)
+    public function titleIndexToGridPosition($tile_num)
     {
         $x = 0;
         $y = 0;

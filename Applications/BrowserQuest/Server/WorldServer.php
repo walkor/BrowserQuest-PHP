@@ -672,7 +672,7 @@ class WorldServer
         foreach($this->map->staticEntities as $tid=>$kindName)
         {
             $kind = Types::getKindFromString($kindName);
-            $pos = $this->map->tileIndexToGridPosition($tid);
+            $pos = $this->map->titleIndexToGridPosition($tid);
             
             if(Types::isNpc($kind)) 
             {
