@@ -375,7 +375,7 @@ class WorldServer
             if($this->outgoingQueues[$id]) {
                 $connection = $this->server->getConnection($id);
                 $connection->send(json_encode($this->outgoingQueues[$id]));
-                $this->outgoingQueues[id] = array();
+                $this->outgoingQueues[$id] = array();
             }
         }
     }
@@ -569,7 +569,7 @@ class WorldServer
             $mob->setTarget($player);
             
             $this->broadcastAttacker(mob);
-            echo mob.id . " is now attacking " . $player->id;
+            echo $mob->id . " is now attacking " . $player->id;
         }
     }
     
@@ -811,7 +811,7 @@ class WorldServer
             $group = $this->groups[$entity->group];
             if($entity instanceof Player) 
             {
-                $group->players = Utils::reject($group->players, function($id) use($entity) { return id === $entity->id; });
+                $group->players = Utils::reject($group->players, function($id) use($entity) { return $id === $entity->id; });
             }
             
             $this->map->forEachAdjacentGroup($entity->group, function($id) use ($entity, &$oldGroups) 
@@ -925,7 +925,7 @@ class WorldServer
                         } 
                         else 
                         {
-                            $this->pushToGroup(id, new Messages\Spawn($entity));
+                            $this->pushToGroup($id, new Messages\Spawn($entity));
                         }
                     }
                     foreach($this->groups[$id]->incoming as $entity)
@@ -936,7 +936,7 @@ class WorldServer
                         } 
                         else 
                         {
-                            $this->pushToGroup(id, new Messages\Spawn($entity));
+                            $this->pushToGroup($id, new Messages\Spawn($entity));
                         }
                     }
                     $this->groups[$id]->incoming = array();

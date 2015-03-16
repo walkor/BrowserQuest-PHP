@@ -23,7 +23,7 @@ class Utils
                 $arr[] = $item;
             }
         }
-        return $item;
+        return $arr;
     }
     
     public static function any(array $list, $callback)
