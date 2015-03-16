@@ -195,7 +195,10 @@ class WorldServer
                 $area = new MobArea($a->id, $a->nb, $a->type, $a->x, $a->y, $a->width, $a->height, $self);
                 $area->spawnMobs();
                 // @todo bind
-                $area->onEmpty($self->handleEmptyMobArea->bind($self, area));
+                //$area->onEmpty($self->handleEmptyMobArea->bind($self, area));
+                $area->onEmpty(function() use ($self, $area){
+                    call_user_func(array($self, 'handleEmptyMobArea'), $area);
+                });
                 $self->mobAreas =  $area;
             }
             
@@ -205,8 +208,9 @@ class WorldServer
                 $area = new ChestArea($a->id, $a->x, $a->y, $a->w, $a->h, $a->tx, $a->ty, $a->i, $self);
                 $self->chestAreas[] = $area;
                 // @todo bind
-                //$self->$area
-                $area->onEmpty(array($self, $self->handleEmptyChestArea));
+                $area->onEmpty(function()use($self, $area){
+                    call_user_func(array($self, 'handleEmptyChestArea'), $area);
+                });
             }
         
             // Spawn static chests
@@ -459,8 +463,12 @@ class WorldServer
     public function addStaticItem($item) 
     {
         $item->isStatic = true;
+        $self = $this;
         // @todo bind
-        $item->onRespawn($this->addStaticItem->bind($this, $item));
+        //$item->onRespawn($this->addStaticItem->bind($this, $item));
+        $item->onRespawn(function()use($self, $item){
+            call_user_func(array($self, 'addStaticItem'), $item);
+        });
         
         return $this->addItem($item);
     }
@@ -683,7 +691,7 @@ class WorldServer
                     }
                 });
                 // @todo bind
-                $mob->onMove($this->onMobMoveCallback->bind($this));
+                $mob->onMove(array($self, 'onMobMoveCallback'));
                 $this->addMob($mob);
                 $this->tryAddingMobToChestArea($mob);
             }
