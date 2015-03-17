@@ -428,7 +428,7 @@ class WorldServer
         $npc = new Npc('8'.$x.''.$y, $kind, $x, $y);
         $this->addEntity($npc);
         $this->npcs[$npc->id] = $npc;
-        return npc;
+        return $npc;
     }
     
     public function addItem($item) 
@@ -680,7 +680,7 @@ class WorldServer
             }
             if(Types::isMob($kind)) 
             {
-                $mob = new Mob('7' . kind . ($count++), $kind, $pos['x'] + 1, $pos['y']);
+                $mob = new Mob('7' . $kind . ($count++), $kind, $pos['x'] + 1, $pos['y']);
                 $self = $this;
                 $mob->onRespawn(function() use ($mob, $self){
                     $mob->isDead = false;

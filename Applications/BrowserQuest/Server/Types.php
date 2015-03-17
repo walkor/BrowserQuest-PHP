@@ -191,7 +191,7 @@ class Types
         {
             foreach(self::$stringToKindsMap as $string=>$item)
             {
-                self::$stringToKindsMap[$item[0]] = $string;
+                self::$kindsToStringMap[$item[0]] = $string;
             }
         }
         return self::$kindsToStringMap;
