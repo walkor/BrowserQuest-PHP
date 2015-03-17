@@ -845,7 +845,7 @@ class WorldServer
                 $group = $self->groups[$id];
                 if($group) 
                 {
-                    if(!in_array($entity->id, $group->entities)
+                    if(!isset($group->entities[$entity->id])
                     //  Items dropped off of mobs are handled differently via DROP messages. See handleHurtEntity.
                     && (!$isItem || $isChest || ($isItem && !$isDroppedItem))) 
                     {
