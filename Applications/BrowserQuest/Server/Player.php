@@ -222,9 +222,9 @@ class Player extends Character
         }
         else if($action === TYPES_MESSAGES_CHECK) {
             $checkpoint = $this->server->map->getCheckpoint($message[1]);
-            if(checkpoint) 
+            if($checkpoint) 
             {
-                $this->lastCheckpoint = checkpoint;
+                $this->lastCheckpoint = $checkpoint;
             }
         }
         else 

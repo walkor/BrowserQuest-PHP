@@ -55,7 +55,7 @@ class Utils
         return $list;
     }
     
-    public function distanceTo($x, $y, $x2, $y2) 
+    public static function distanceTo($x, $y, $x2, $y2) 
     {
         $distX = abs($x - $x2);
         $distY = abs($y - $y2);
@@ -63,7 +63,7 @@ class Utils
         return ($distX > $distY) ? $distX : $distY;
     }
     
-    public function randomOrientation() 
+    public static function randomOrientation() 
     {
         $r = rand(0, 4);
         if($r === 0)
@@ -75,6 +75,4 @@ class Utils
         if($r === 3)
             return TYPES_ORIENTATIONS_DOWN;
     }
-    
-    
 }
