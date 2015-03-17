@@ -1006,7 +1006,7 @@ class WorldServer
     {
         foreach($this->chestAreas as $area)
         {
-            if(in_array($mob, (array)$area))
+            if($area->contains($mob))
             {
                 $area->addToArea($mob);
             }
