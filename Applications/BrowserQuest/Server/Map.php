@@ -168,7 +168,7 @@ class Map
         $y = $position['y'];
         // surrounding groups
         $list = array(array('x'=>$x-1, 'y'=>$y-1), array('x'=>$x, 'y'=>$y-1), array('x'=>$x+1, 'y'=>$y-1),
-        array('x'=>$x-1, 'y'=>$y), array('x'=>$x, $y), array($x+1, $y),
+        array('x'=>$x-1, 'y'=>$y), array('x'=>$x, 'y'=>$y), array('x'=>$x+1, 'y'=>$y),
         array('x'=>$x-1, 'y'=>$y+1), array('x'=>$x, 'y'=>$y+1), array('x'=>$x+1, 'y'=>$y+1));
         
         // groups connected via doors
