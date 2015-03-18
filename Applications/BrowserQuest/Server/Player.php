@@ -69,17 +69,17 @@ class Player extends Character
             array_shift($message);
             $this->server->pushSpawnsToPlayer($this, $message);
         }
-        else if($action === TYPES_MESSAGES_CHAT) 
+        else if($action == TYPES_MESSAGES_CHAT) 
         {
             $msg = trim($message[1]);
             
             // Sanitized messages may become empty. No need to broadcast empty chat messages.
-            if($msg && $msg !== "") {
-                $msg = substr($msg, 0, 60); // Enforce maxlength of chat input
+            if($msg) 
+            {
                 $this->broadcastToZone(new Messages\Chat($this, $msg), false);
             }
         }
-        else if($action === TYPES_MESSAGES_MOVE) {
+        else if($action == TYPES_MESSAGES_MOVE) {
             if($this->moveCallback) 
             {
                 $x = $message[1];
@@ -94,7 +94,7 @@ class Player extends Character
                 }
             }
         }
-        else if($action === TYPES_MESSAGES_LOOTMOVE) {
+        else if($action == TYPES_MESSAGES_LOOTMOVE) {
             if($this->lootmoveCallback) 
             {
                 $this->setPosition($message[1], $message[2]);
@@ -108,32 +108,35 @@ class Player extends Character
                 }
             }
         }
-        else if($action === TYPES_MESSAGES_AGGRO) {
-            if($this->moveCallback) {
+        else if($action == TYPES_MESSAGES_AGGRO) {
+            if($this->moveCallback) 
+            {
                 $this->server->handleMobHate($message[1], $this->id, 5);
             }
         }
-        else if($action === TYPES_MESSAGES_ATTACK) {
+        else if($action == TYPES_MESSAGES_ATTACK) {
             $mob = $this->server->getEntityById($message[1]);
-            
-            if($mob) {
+            if($mob) 
+            {
                 $this->setTarget($mob);
                 $this->server->broadcastAttacker($this);
             }
         }
-        else if($action === TYPES_MESSAGES_HIT) {
+        else if($action == TYPES_MESSAGES_HIT) {
             $mob = $this->server->getEntityById($message[1]);
-            if($mob) {
+            if($mob) 
+            {
                 $dmg = Formulas::dmg($this->weaponLevel, $mob->armorLevel);
                 
-                if($dmg > 0) {
+                if($dmg > 0) 
+                {
                     $mob->receiveDamage($dmg, $this->id);
                     $this->server->handleMobHate($mob->id, $this->id, $dmg);
                     $this->server->handleHurtEntity($mob, $this, $dmg);
                 }
             }
         }
-        else if($action === TYPES_MESSAGES_HURT) {
+        else if($action == TYPES_MESSAGES_HURT) {
             $mob = $this->server->getEntityById($message[1]);
             if($mob && $this->hitPoints > 0) 
             {
@@ -151,7 +154,7 @@ class Player extends Character
                 }
             }
         }
-        else if($action === TYPES_MESSAGES_LOOT) {
+        else if($action == TYPES_MESSAGES_LOOT) {
             $item = $this->server->getEntityById($message[1]);
             
             if($item) 
@@ -163,11 +166,11 @@ class Player extends Character
                     $this->broadcast($item->despawn());
                     $this->server->removeEntity($item);
                     
-                    if($kind === TYPES_ENTITIES_FIREPOTION) 
+                    if($kind == TYPES_ENTITIES_FIREPOTION) 
                     {
                         $this->updateHitPoints();
                         $this->broadcast($this->equip(TYPES_ENTITIES_FIREFOX));
-                        $this->firepotionTimeout = Timer::add(15, array($this, 'firepotionTimeoutCallback'));
+                        $this->firepotionTimeout = Timer::add(15, array($this, 'firepotionTimeoutCallback'), array(), false);
                         $hitpoints = new Messages\HitPoints($this->maxHitPoints);
                         $data = $hitpoints->serialize();
                         $this->connection->send(json_encode($data));
@@ -175,7 +178,8 @@ class Player extends Character
                     else if(Types::isHealingItem($kind)) 
                     {
                         $amount = 0;
-                        switch($kind) {
+                        switch($kind) 
+                        {
                             case TYPES_ENTITIES_FLASK: 
                                 $amount = 40;
                                 break;
@@ -198,13 +202,13 @@ class Player extends Character
                 }
             }
         }
-        else if($action === TYPES_MESSAGES_TELEPORT) {
+        else if($action == TYPES_MESSAGES_TELEPORT) {
             $x = $message[1];
             $y = $message[2];
             
             if($this->server->isValidPosition($x, $y)) 
             {
-                $this->setPosition(x, y);
+                $this->setPosition($x, $y);
                 $this->clearTarget();
                 
                 $this->broadcast(new Messages\Teleport($this));
@@ -213,14 +217,14 @@ class Player extends Character
                 $this->server->pushRelevantEntityListTo($this);
             }
         }
-        else if($action === TYPES_MESSAGES_OPEN) {
+        else if($action == TYPES_MESSAGES_OPEN) {
             $chest = $this->server->getEntityById($message[1]);
             if($chest && $chest instanceof Chest) 
             {
                 $this->server->handleOpenedChest($chest, $this);
             }
         }
-        else if($action === TYPES_MESSAGES_CHECK) {
+        else if($action == TYPES_MESSAGES_CHECK) {
             $checkpoint = $this->server->map->getCheckpoint($message[1]);
             if($checkpoint) 
             {
@@ -229,9 +233,9 @@ class Player extends Character
         }
         else 
         {
-            if($this->messageCallback) 
+            if(isset($this->messageCallback)) 
             {
-                $this->messageCallback($message);
+                call_user_func($this->messageCallback, $message);
             }
         }
     }
@@ -364,7 +368,7 @@ class Player extends Character
     
     public function removeHater($mob) 
     {
-        if($mob && isset($this->haters[$mob->id]))
+        if($mob)
         {
             unset($this->haters[$mob->id]);
         }
@@ -422,7 +426,8 @@ class Player extends Character
         }
     }
     
-    public function onRequestPosition($callback) {
+    public function onRequestPosition($callback) 
+    {
         $this->requestposCallback = $callback;
     }
     

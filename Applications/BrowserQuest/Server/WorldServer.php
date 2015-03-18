@@ -154,7 +154,7 @@ class WorldServer
         $this->onEntityAttack(function($attacker) use($self)
         {
             $target = $self->getEntityById($attacker->target);
-            if($target && $attacker->type === "mob") 
+            if($target && $attacker->type == "mob") 
             {
                 $pos = $self->findPositionNextTo($attacker, $target);
                 $self->moveEntity($attacker, $pos['x'], $pos['y']);
@@ -168,7 +168,7 @@ class WorldServer
                 if(!$character->hasFullHealth()) 
                 {
                     $character->regenHealthBy(floor($character->maxHitPoints / 25));
-                    if($character->type === 'player') 
+                    if($character->type == 'player') 
                     {
                         $self->pushToPlayer($character, $character->regen());
                     }
@@ -199,7 +199,7 @@ class WorldServer
                 $area->onEmpty(function() use ($self, $area){
                     call_user_func(array($self, 'handleEmptyMobArea'), $area);
                 });
-                $self->mobAreas =  $area;
+                $self->mobAreas[] =  $area;
             }
             
             // Create all chest areas

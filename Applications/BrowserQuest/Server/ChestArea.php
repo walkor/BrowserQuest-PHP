@@ -15,7 +15,8 @@ class ChestArea extends Area
     }
     public function contains($entity)
     {
-        if($entity) {
+        if($entity) 
+        {
             return $entity->x >= $this->x
             && $entity->y >= $this->y
             && $entity->x < $this->x + $this->width

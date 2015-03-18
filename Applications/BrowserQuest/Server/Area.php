@@ -71,7 +71,7 @@ class Area
     
     public function isFull()
     {
-        return !$this->isEmpty() && ($this->nbEntities === count($this->entities));
+        return !$this->isEmpty() && ($this->nbEntities == count($this->entities));
     }
     
     public function isEmpty()

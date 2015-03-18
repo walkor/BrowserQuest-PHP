@@ -16,9 +16,10 @@ class Item extends Entity
     
     public function handleDespawn($params)
     {
-        $this->$blinkTimeout = Timer::add($params['beforeBlinkDelay']/1000, function() use ($params){
+        $self = $this;
+        $this->$blinkTimeout = Timer::add($params['beforeBlinkDelay']/1000, function() use ($params, $self){
             call_user_func($params['blinkCallback']);
-            $this->despawnTimeout = Timer::add($params['blinkingDuration']/1000, 
+            $self->despawnTimeout = Timer::add($params['blinkingDuration']/1000, 
                     $params['despawnCallback'], 
                     array(),
                      false

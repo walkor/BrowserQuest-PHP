@@ -12,7 +12,7 @@ class Character extends Entity
     {
         parent::__construct($id, $type, $kind, $x, $y);
         
-        //@todo $this->orientation = Utils::randomOrientation();
+        $this->orientation = Utils::randomOrientation();
     }
     
     public function getState()
@@ -55,7 +55,7 @@ class Character extends Entity
     
     public function hasFullHealth()
     {
-        return $this->hitPoints === $this->maxHitPoints;
+        return $this->hitPoints == $this->maxHitPoints;
     }
     
     public function setTarget($entity) 
@@ -98,7 +98,7 @@ class Character extends Entity
     
     public function removeAttacker($entity)
     {
-         if($entity && isset($this->attackers[$entity->id]))
+         if($entity)
          {
             unset($this->attackers[$entity->id]);
         }
@@ -108,7 +108,7 @@ class Character extends Entity
     {
         foreach($this->attackers as $id=>$item)
         {
-            $callback($item);
+            call_user_func($callback, $item);
         }
     }
 }

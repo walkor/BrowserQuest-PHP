@@ -44,7 +44,7 @@ class Server
     
     public function broadcast($data)
     {
-        foreach($this->connections as $connection)
+        foreach($this->_connections as $connection)
         {
             $connection->send($data);
         }

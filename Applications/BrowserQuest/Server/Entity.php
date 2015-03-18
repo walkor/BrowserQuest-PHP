@@ -57,7 +57,8 @@ class Entity
     public function getPositionNextTo($entity)
     {
         $pos = null;
-        if($entity) {
+        if($entity) 
+        {
             $pos = array();
             // This is a quick & dirty way to give mobs a random position
             // close to another entity.

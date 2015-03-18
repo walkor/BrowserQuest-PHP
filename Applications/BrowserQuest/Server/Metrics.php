@@ -51,7 +51,7 @@ class Metrics
             $count = $result ? intval(result) : 0;
             $this->totalPlayers += $count;
             $numServers -= 1;
-            if($numServers === 0) {
+            if($numServers == 0) {
                  $this->client->set('total_players', $this->totalPlayers);
                  if($updatedCallback) 
                  {

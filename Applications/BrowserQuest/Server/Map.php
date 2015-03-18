@@ -66,9 +66,6 @@ class Map
     
     public function titleIndexToGridPosition($tile_num)
     {
-        $x = 0;
-        $y = 0;
-        
         $tile_num -= 1;
         $x = $this->getX($tile_num + 1, $this->width);
         $y = floor($tile_num / $this->width);
@@ -85,7 +82,7 @@ class Map
         return ($num % $w == 0) ? $w - 1 : ($num % $w) - 1;
     }
     
-    public function GridPositionTotile_index($x ,$y)
+    public function GridPositionToTileIndex($x ,$y)
     {
         return ($y * $this->width) + $x + 1;
     }
@@ -128,14 +125,14 @@ class Map
         {
             return false;
         }
-        return $this->grid[$y][$x] === 1;
+        return $this->grid[$y][$x] == 1;
     }
     
     public function GroupIdToGroupPosition($id)
     {
         $pos_array =explode('-', $id);
         
-        return array('x'=>(int)$pos_array[0], 'y'=>(int)($pos_array[1]));
+        return array('x'=>$pos_array[0], 'y'=>$pos_array[1]);
     }
     
     public function forEachGroup($callback)
@@ -230,7 +227,7 @@ class Map
         {
             $checkpoint = new Checkpoint($cp->id, $cp->x, $cp->y, $cp->w, $cp->h);
             $self->checkpoints[$checkpoint->id] = $checkpoint;
-            if($cp->s === 1) 
+            if($cp->s == 1) 
             {
                 $self->startingAreas[] = $checkpoint;
             }
@@ -253,6 +250,6 @@ class Map
     
     public function equalPositions($pos1, $pos2)
     {
-        return $pos1['x'] === $pos2['x'] && $pos2['y'] === $pos2['y'];
+        return $pos1['x'] == $pos2['x'] && $pos2['y'] == $pos2['y'];
     }
 }

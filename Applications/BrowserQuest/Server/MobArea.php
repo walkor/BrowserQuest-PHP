@@ -28,7 +28,7 @@ class MobArea extends Area
    {
         $k = Types::getKindFromString($this->kind);
         $pos = $this->_getRandomPositionInsideArea();
-        $mob = new Mob('1' . $this->id . ''. k + ''. $this->entities->length, $k, $pos['x'], $pos['y']);
+        $mob = new Mob('1' . $this->id . ''. $k . ''. $this->entities->length, $k, $pos['x'], $pos['y']);
         
         // @todo bind
         $mob->onMove(array($this->world, $this->world->onMobMoveCallback));
@@ -45,8 +45,8 @@ class MobArea extends Area
     public function respawnMobCallback($mob)
     {
         $pos = $this->_getRandomPositionInsideArea();
-        $mob->x = $pos->x;
-        $mob->y = $pos->y;
+        $mob->x = $pos['x'];
+        $mob->y = $pos['y'];
         $mob->isDead = false;
         $this->addToArea($mob);
         $this->world->addMob($mob);

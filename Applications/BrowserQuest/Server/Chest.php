@@ -15,9 +15,9 @@ class Chest extends Item
     public function getRandomItem()
     {
         $item = null;
-        if(count($this->items) > 0) {
-            $item = $this->items[array_rand($this->items)];
+        if($this->items) 
+        {
+            return $this->items[array_rand($this->items)];
         }
-        return item;
     }
 }

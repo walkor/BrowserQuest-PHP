@@ -50,16 +50,17 @@ class Mob extends Character
     {
         return Utils::any($this->hatelist, function($obj) 
         { 
-            return $obj->id === $playerId; 
+            return $obj->id == $playerId; 
         });
     }
     
     public function increaseHateFor($playerId, $points)
     {
-        if($this->hates($playerId)) {
+        if($this->hates($playerId)) 
+        {
             if(Utils::detect($this->hatelist, function($obj) 
             {
-                return obj.id === playerId;
+                return obj.id == playerId;
             }))
             {
                 $hate += points;
@@ -107,10 +108,11 @@ class Mob extends Character
     {
         $this->hatelist = Utils::reject($this->hatelist, function($obj) 
         {
-            return $obj->id === $playerId;
+            return $obj->id == $playerId;
         });
         
-        if(count($this->hatelist) === 0) {
+        if(empty($this->hatelist)) 
+        {
             $this->returnToSpawningPosition($duration);
         }
     }
@@ -189,7 +191,8 @@ class Mob extends Character
     public function move($x, $y)
     {
         $this->setPosition($x, $y);
-        if($this->moveCallback) {
+        if($this->moveCallback) 
+        {
             call_user_func($this->moveCallback, $this);
         }
     }
