@@ -7,30 +7,33 @@ use \Server\WorldServer;
 
 \Workerman\Autoloader::setRootPath(__DIR__);
 
-$server = new \Server\Server();
-$config = json_decode(file_get_contents(__DIR__ . '/config.json'), true);
-$worlds = array();
-
-foreach(range(0, $config['nb_worlds']) as $i)
-{
-    $world = new WorldServer('world'. ($i+1), $config['nb_players_per_world'], $server);
-    $world->run($config['map_filepath']);
-    $worlds[] = $world;
-}
-
 $ws_worker = new Worker('Websocket://0.0.0.0:8000');
-$ws_worker->onConnect = function($connection) use ($server, $config, $worlds)
+$ws_worker->onWorkerStart = function($ws_worker)
+{
+    $ws_worker->server = new \Server\Server();
+    $ws_worker->config = json_decode(file_get_contents(__DIR__ . '/config.json'), true);
+    $ws_worker->worlds = array();
+    
+    foreach(range(0, $ws_worker->config['nb_worlds']) as $i)
+    {
+        $world = new WorldServer('world'. ($i+1), $ws_worker->config['nb_players_per_world'], $ws_worker->server);
+        $world->run($ws_worker->config['map_filepath']);
+        $ws_worker->worlds[] = $world;
+    }
+};
+
+$ws_worker->onConnect = function($connection) use ($ws_worker)
 {
     $connection->id = (int)$connection->getSocket();
-    $connection->server = $server;
+    $connection->server = $ws_worker->server;
     //$server->addConnection($connection);
     if(isset($server->connectionCallback))
     {
-        call_user_func($server->connectionCallback);
+        call_user_func($ws_worker->server->connectionCallback);
     }
-    $world = Utils::detect($worlds, function($world)use($config) 
+    $world = Utils::detect($ws_worker->worlds, function($world)use($ws_worker) 
     {
-        return $world->playerCount < $config['nb_players_per_world'];
+        return $world->playerCount < $ws_worker->config['nb_players_per_world'];
     });
     $world->updatePopulation(null);
     if($world && isset($world->connectCallback))
