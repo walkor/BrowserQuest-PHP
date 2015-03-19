@@ -69,6 +69,9 @@ class Player extends Character
             array_shift($message);
             $this->server->pushSpawnsToPlayer($this, $message);
         }
+        else if($action === TYPES_MESSAGES_ZONE) {
+            call_user_func($this->zoneCallback);
+        }
         else if($action == TYPES_MESSAGES_CHAT) 
         {
             $msg = trim($message[1]);
