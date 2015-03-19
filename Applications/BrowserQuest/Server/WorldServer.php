@@ -373,7 +373,7 @@ class WorldServer
         foreach($this->outgoingQueues as $id=>$item)
         {
             if($this->outgoingQueues[$id]) {
-                $connection = $this->server->getConnection($id);
+                $connection = $this->server->connections($id);
                 $connection->send(json_encode($this->outgoingQueues[$id]));
                 $this->outgoingQueues[$id] = array();
             }

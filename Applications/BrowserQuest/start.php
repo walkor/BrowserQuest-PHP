@@ -14,9 +14,9 @@ $ws_worker->onWorkerStart = function($ws_worker)
     $ws_worker->config = json_decode(file_get_contents(__DIR__ . '/config.json'), true);
     $ws_worker->worlds = array();
     
-    foreach(range(0, $ws_worker->config['nb_worlds']) as $i)
+    foreach(range(1, $ws_worker->config['nb_worlds']) as $i)
     {
-        $world = new WorldServer('world'. ($i+1), $ws_worker->config['nb_players_per_world'], $ws_worker->server);
+        $world = new WorldServer('world'. ($i+1), $ws_worker->config['nb_players_per_world'], $ws_worker);
         $world->run($ws_worker->config['map_filepath']);
         $ws_worker->worlds[] = $world;
     }
