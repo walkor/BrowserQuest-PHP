@@ -253,7 +253,7 @@ class WorldServer
             }
         });
         
-        echo $this->id." created (capacity: ".$this->maxPlayers." players \n";
+        echo $this->id." created capacity: ".$this->maxPlayers." players \n";
     }
     
     public function setUpdatesPerSecond($ups) 
@@ -718,7 +718,7 @@ class WorldServer
         // When a player dies or teleports, all of his attackers go and attack their second most hated $player->
         $player->forEachAttacker(function($mob) use (&$previousAttackers, $self, $mob)
         {
-            $previousAttackers->push($mob);
+            $previousAttackers[] =$mob;
             $self->chooseMobTarget($mob, 2);
         });
         
@@ -811,7 +811,7 @@ class WorldServer
             $group = $this->groups[$entity->group];
             if($entity instanceof Player) 
             {
-                $group->players = Utils::reject($group->players, function($id) use($entity) { return $id === $entity->id; });
+                $group->players = Utils::reject($group->players, function($id) use($entity) { return $id == $entity->id; });
             }
             
             $this->map->forEachAdjacentGroup($entity->group, function($id) use ($entity, &$oldGroups) 
@@ -889,7 +889,7 @@ class WorldServer
         if($entity) 
         {
             $groupId = $this->map->getGroupIdFromPosition($entity->x, $entity->y);
-            if(empty($entity->group) || ($entity->group && $entity->group !== $groupId)) 
+            if(empty($entity->group) || ($entity->group && $entity->group != $groupId)) 
             {
                 $hasChangedGroups = true;
                 $this->addAsIncomingToGroup($entity, $groupId);
