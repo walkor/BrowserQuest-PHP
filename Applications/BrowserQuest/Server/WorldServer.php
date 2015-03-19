@@ -320,7 +320,7 @@ class WorldServer
         }
     }
     
-    public function pushToGroup($groupId, $message, $ignoredPlayer) {
+    public function pushToGroup($groupId, $message, $ignoredPlayer=null) {
         $group = $this->groups[$groupId];
         if($group) 
         {
@@ -899,7 +899,7 @@ class WorldServer
                 if(count($oldGroups) > 0) 
                 {
                     $entity->recentlyLeftGroups = array_diff($oldGroups, $newGroups);
-                    echo "group diff: " . $entity->recentlyLeftGroups;
+                    echo "group diff: " . json_encode($entity->recentlyLeftGroups);
                 }
             }
         }
