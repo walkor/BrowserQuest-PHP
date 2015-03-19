@@ -290,7 +290,7 @@ class Player extends Character
         {
             $state[] =$this->target;
         }
-        return array_merge(basestate,state);
+        return array_merge($basestate, $state);
     }
     
     public function send($message)
