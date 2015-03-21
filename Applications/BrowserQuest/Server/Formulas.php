@@ -11,7 +11,7 @@ class Formulas
         if($dmg <= 0) {
             return rand(0, 3);
         } else {
-            return dmg;
+            return $dmg;
         }
     }
     
