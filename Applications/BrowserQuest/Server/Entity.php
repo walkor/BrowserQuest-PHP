@@ -68,11 +68,11 @@ class Entity
             $pos['y'] = $entity->y;
             if($r === 0)
                 $pos['y'] -= 1;
-            if(r === 1)
+            if($r === 1)
                 $pos['y'] += 1;
-            if(r === 2)
+            if($r === 2)
                 $pos['x'] -= 1;
-            if(r === 3)
+            if($r === 3)
                 $pos['x'] += 1;
         }
         return pos;
