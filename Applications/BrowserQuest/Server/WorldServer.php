@@ -568,7 +568,7 @@ class WorldServer
             $player->addAttacker($mob);
             $mob->setTarget($player);
             
-            $this->broadcastAttacker(mob);
+            $this->broadcastAttacker($mob);
             echo $mob->id . " is now attacking " . $player->id;
         }
     }
