@@ -75,6 +75,6 @@ class Entity
             if($r === 3)
                 $pos['x'] += 1;
         }
-        return pos;
+        return $pos;
     }
 }
