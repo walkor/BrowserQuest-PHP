@@ -3,8 +3,8 @@ namespace Server;
 
 class Npc extends Entity
 {
-    public function __construct($id, $type, $x, $y)
+    public function __construct($id, $kind, $x, $y)
     {
-        parent::__construct($id, $type, 'npc', $x, $y);
+        parent::__construct($id, 'npc', $kind, $x, $y);
     }
 }
