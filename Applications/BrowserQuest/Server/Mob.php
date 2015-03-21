@@ -58,9 +58,9 @@ class Mob extends Character
     {
         if($this->hates($playerId)) 
         {
-            if(Utils::detect($this->hatelist, function($obj) 
+            if(Utils::detect($this->hatelist, function($obj) use($playerId)
             {
-                return $obj->id == playerId;
+                return $obj->id == $playerId;
             }))
             {
                 $hate += $points;

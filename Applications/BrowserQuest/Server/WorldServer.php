@@ -639,7 +639,7 @@ class WorldServer
 
                 $this->pushToPlayer($attacker, new Messages\Kill($mob));
                 $this->pushToAdjacentGroups($mob->group, $mob->despawn()); // Despawn must be enqueued before the item drop
-                if(item) 
+                if($item) 
                 {
                     $this->pushToAdjacentGroups($mob->group, $mob->drop($item));
                     $this->handleItemDespawn($item);
@@ -784,7 +784,7 @@ class WorldServer
             $pos = $entity->getPositionNextTo($target);
             $valid = $this->isValidPosition($pos['x'], $pos['y']);
         }
-        return pos;
+        return $pos;
     }
     
     public function initZoneGroups() 
