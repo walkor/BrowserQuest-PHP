@@ -615,7 +615,7 @@ class WorldServer
         }
     }
     
-    public function handleHurtEntity($entity, $attacker, $damage) 
+    public function handleHurtEntity($entity, $attacker = null, $damage = 0) 
     {
         if($entity->type === 'player') 
         {

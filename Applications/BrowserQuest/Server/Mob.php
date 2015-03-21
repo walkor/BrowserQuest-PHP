@@ -48,7 +48,7 @@ class Mob extends Character
     
     public function hates($playerId)
     {
-        return Utils::any($this->hatelist, function($obj) 
+        return Utils::any($this->hatelist, function($obj) use($playerId)
         { 
             return $obj->id == $playerId; 
         });

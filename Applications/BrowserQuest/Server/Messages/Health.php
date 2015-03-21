@@ -24,7 +24,7 @@ class Health
         {
             $health[] =1;
         }
-        return health;
+        return $health;
     }
 }
 
