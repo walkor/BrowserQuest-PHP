@@ -611,7 +611,7 @@ class WorldServer
         }
         if($this->attackCallback) 
         {
-            $this->attackCallback($character);
+            call_user_func($this->attackCallback, $character);
         }
     }
     
