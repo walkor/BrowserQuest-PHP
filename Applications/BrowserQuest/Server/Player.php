@@ -364,7 +364,7 @@ class Player extends Character
         if($mob) {
             if(!(isset($this->haters[$mob->id]))) 
             {
-                $this->haters[$mob->id] = mob;
+                $this->haters[$mob->id] = $mob;
             }
         }
     }

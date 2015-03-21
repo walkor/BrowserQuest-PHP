@@ -60,15 +60,15 @@ class Mob extends Character
         {
             if(Utils::detect($this->hatelist, function($obj) 
             {
-                return obj.id == playerId;
+                return $obj->id == playerId;
             }))
             {
-                $hate += points;
+                $hate += $points;
             }
         }
         else 
         {
-            $this->hatelist[] = array('id'=>$playerId, 'hate'=> $points);
+            $this->hatelist[] = (object)array('id'=>$playerId, 'hate'=> $points);
         }
         
         if($this->returnTimeout) {

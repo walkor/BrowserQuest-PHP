@@ -338,7 +338,7 @@ class WorldServer
         }
     }
     
-    public function pushToAdjacentGroups($groupId, $message, $ignoredPlayer) {
+    public function pushToAdjacentGroups($groupId, $message, $ignoredPlayer=0) {
         $self = $this;
         $this->map->forEachAdjacentGroup($groupId, function($id) use ($self, $message, $ignoredPlayer) 
         {
@@ -551,12 +551,12 @@ class WorldServer
             
             if($mob->hitPoints > 0) 
             { // only choose a target if still alive
-                $this->chooseMobTarget($mob);
+                $this->chooseMobTarget($mob, 0);
             }
         }
     }
     
-    public function chooseMobTarget($mob, $hateRank) 
+    public function chooseMobTarget($mob, $hateRank = 0) 
     {
         $player = $this->getEntityById($mob->getHatedPlayerId($hateRank));
         
@@ -758,16 +758,15 @@ class WorldServer
         $v = rand(0, 100);
         $p = 0;
         
-        foreach($itemName as $itemName => $percentage)
+        foreach($drops as $itemName => $percentage)
         {
             $p += $percentage;
             if($v <= $p) 
             {
                 $item = $this->addItem($this->createItem(Types::getKindFromString($itemName), $mob->x, $mob->y));
-                break;
+                return $item;
             }
         }
-        return $item;
     }
     
     public function onMobMoveCallback($mob) 
