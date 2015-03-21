@@ -442,7 +442,7 @@ class WorldServer
     public function createItem($kind, $x, $y) 
     {
         $id = '9'.($this->itemCount++);
-        if($kind === TYPES_ENTITIES_CHEST) 
+        if($kind == TYPES_ENTITIES_CHEST) 
         {
             $item = new Chest($id, $x, $y);
         } 

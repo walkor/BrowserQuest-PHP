@@ -26,7 +26,6 @@ $ws_worker->onConnect = function($connection) use ($ws_worker)
 {
     $connection->id = (int)$connection->getSocket();
     $connection->server = $ws_worker->server;
-    //$server->addConnection($connection);
     if(isset($server->connectionCallback))
     {
         call_user_func($ws_worker->server->connectionCallback);
