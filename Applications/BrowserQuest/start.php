@@ -5,8 +5,10 @@ use \Server\Utils;
 use \Server\Player;
 use \Server\WorldServer;
 
-\Workerman\Autoloader::setRootPath(__DIR__);
+// 自动加载类
+require_once __DIR__ . '/../../Workerman/Autoloader.php';
 
+// BrowserQuest Server
 $ws_worker = new Worker('Websocket://0.0.0.0:8000');
 $ws_worker->onWorkerStart = function($ws_worker)
 {
@@ -41,10 +43,15 @@ $ws_worker->onConnect = function($connection) use ($ws_worker)
     }
 };
 
-
 // WebServer
 $web = new WebServer("http://0.0.0.0:8787");
 
-$web->count = 2;
+$web->count = 6;
 
 $web->addRoot('www.your_domain.com', __DIR__.'/Web');
+
+// 如果不是在根目录启动，则运行runAll方法
+if(!defined('GLOBAL_START'))
+{
+    Worker::runAll();
+}
