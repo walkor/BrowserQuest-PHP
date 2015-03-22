@@ -304,7 +304,14 @@ class WorldServer
         foreach($ids as $id)
         {
             $entity = $this->getEntityById($id);
-            $this->pushToPlayer($player, new Messages\Spawn($entity));
+            if($entity)
+            {
+                $this->pushToPlayer($player, new Messages\Spawn($entity));
+            }
+            else
+            {
+                echo new \Exception("bad id:$id ids:" . json_encode($ids));
+            }
         }
     }
     
