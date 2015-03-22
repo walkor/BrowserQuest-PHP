@@ -94,13 +94,14 @@ class Map
         if($this->isLoaded) 
         {
             $tile_index = 0;
+            $collisions_map = array_flip($this->collisions);
             for($i = 0; $i < $this->height; $i++) 
             {
                 $this->grid[$i] = array();
                 for($j = 0; $j < $this->width; $j++) 
                 {
                     // @todo use isset 
-                    if(in_array($tile_index, $this->collisions)) 
+                    if(isset($collisions_map[$tile_index])) 
                     {
                         $this->grid[$i][$j] = 1;
                     }
