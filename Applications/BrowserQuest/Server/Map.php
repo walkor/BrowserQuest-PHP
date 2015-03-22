@@ -44,6 +44,12 @@ class Map
         $this->staticEntities = (array)$map->staticEntities;
         $this->isLoaded = true;
         
+        // ??
+        foreach($this->chestAreas as $id=>$item)
+        {
+            $this->chestAreas[$id]['id'] = $id;
+        }
+        
         // zone groups
         $this->zoneWidth = 28;
         $this->zoneHeight = 12;
