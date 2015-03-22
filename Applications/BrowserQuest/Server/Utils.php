@@ -10,6 +10,7 @@ class Utils
         {
             foreach($list as $item)
             {
+                $item = (array)$item;
                 $value_array[] =$item[$key];
             }
         }
