@@ -170,16 +170,18 @@ class Map
         
         // groups connected via doors
         $self = $this;
-        //file_put_contents('/tmp/trace', ">>>>>>>>>>>>>$id<<<<<<<<<<<<<\n\n\n".var_export($this->connectedGroups[$id], true)."\n\n\n".var_export($this->connectedGroups, true)."\n\n", 9);
-        array_walk($this->connectedGroups[$id], function ($position) use (&$list, $self){
-            // don't add a connected group if it's already part of the surrounding ones.
-            if(Utils::any($list, function($group_pos)use($position, $self) {
-                return $self->equalPositions($group_pos, $position);
-            })) 
-            {
-                $list[] = $position;
-            }
-        });
+        if(!empty($this->connectedGroups[$id]))
+        {
+            array_walk($this->connectedGroups[$id], function ($position) use (&$list, $self){
+                // don't add a connected group if it's already part of the surrounding ones.
+                if(Utils::any($list, function($group_pos)use($position, $self) {
+                    return $self->equalPositions($group_pos, $position);
+                })) 
+                {
+                    $list[] = $position;
+                }
+            });
+        }
         
         return Utils::reject($list, function($pos)use($self) 
         {
