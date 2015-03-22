@@ -503,7 +503,7 @@ class WorldServer
             foreach($mob->hatelist as $obj)
             {
                 $player = $this->getEntityById($obj->id);
-                if(player) 
+                if($player) 
                 {
                     $player->removeHater($mob);
                 }

@@ -135,14 +135,14 @@ class Mob extends Character
     public function handleRespawn()
     {
         $delay = 30000;
-        if($this->area && $this->area instanceof MobArea) 
+        if(!empty($this->area) && $this->area instanceof MobArea) 
         {
             // Respawn inside the area if part of a MobArea
             $this->area->respawnMob($this, $delay);
         }
         else 
         {
-            if($this->area && $this->area instanceof ChestArea) 
+            if(!empty($this->area) && $this->area instanceof ChestArea) 
             {
                 $this->area->removeFromArea($this);
             }
