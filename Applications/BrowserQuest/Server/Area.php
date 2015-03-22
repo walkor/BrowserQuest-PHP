@@ -43,15 +43,15 @@ class Area
     
     public function removeFromArea($entity)
     {
-        $index = array_search(Utils::pluck($this->entities, 'id'), $entity->id);
-        unset($this->entities[$index]);
+        //$index = array_search($entity->id, Utils::pluck($this->entities, 'id'));
+        unset($this->entities[$entity->id]);
     }
     
     public function addToArea($entity)
     {
         if($entity)
         {
-            $this->entities[] = $entity;
+            $this->entities[$entity->id] = $entity;
             $entity->area = $this;
             if($entity instanceof Mob)
             {
