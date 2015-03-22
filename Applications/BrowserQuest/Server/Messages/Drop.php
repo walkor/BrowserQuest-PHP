@@ -5,8 +5,8 @@ use Server\Utils;
 
 class Drop
 {
-    public $mob = 0;
-    public $item = 0;
+    public $mob;
+    public $item;
     public function __construct($mob, $item)
     {
         $this->playerId = $mob;
