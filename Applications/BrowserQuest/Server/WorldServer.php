@@ -716,7 +716,7 @@ class WorldServer
        $previousAttackers = array();
         $self = $this;
         // When a player dies or teleports, all of his attackers go and attack their second most hated $player->
-        $player->forEachAttacker(function($mob) use (&$previousAttackers, $self, $mob)
+        $player->forEachAttacker(function($mob) use (&$previousAttackers, $self)
         {
             $previousAttackers[] =$mob;
             $self->chooseMobTarget($mob, 2);
