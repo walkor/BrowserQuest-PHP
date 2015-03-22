@@ -898,7 +898,7 @@ class WorldServer
                 if(count($oldGroups) > 0) 
                 {
                     $entity->recentlyLeftGroups = array_diff($oldGroups, $newGroups);
-                    echo "group diff: " . json_encode($entity->recentlyLeftGroups);
+                    //echo "group diff: " . json_encode($entity->recentlyLeftGroups);
                 }
             }
         }
