@@ -10,7 +10,7 @@ class Utils
         {
             foreach($list as $item)
             {
-                $value_array =$item[$key];
+                $value_array[] =$item[$key];
             }
         }
         return $value_array;
