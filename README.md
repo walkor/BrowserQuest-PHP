@@ -1,6 +1,8 @@
 # BrowserQuest-PHP
 BrowserQuest server in PHP
 
+![BrowserQuest width workerman](https://github.com/walkor/BrowserQuest-PHP/blob/master/Applications/BrowserQuest/Web/img/screenshot.jpg?raw=true)
+
 ## 启动停止
 以debug模式启动 ```php start.php start```  
 以daemon模式启动 ```php start.php start -d```  
