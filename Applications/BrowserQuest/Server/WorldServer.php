@@ -73,7 +73,7 @@ class WorldServer
         $this->onPlayerEnter(
                 function($player) use ($self)
                 {
-                    echo $player->name . " has joined ". $self->id;
+                    echo $player->name . " has joined ". $self->id."\n";
                 
                     if(!$player->hasEnteredGame) 
                     {
@@ -400,7 +400,7 @@ class WorldServer
         
         $entity->destroy();
         $this->removeFromGroups($entity);
-        echo "Removed " .Types::getKindAsString($entity->kind) ." : ". $entity->id;
+        echo "Removed " .Types::getKindAsString($entity->kind) ." : ". $entity->id."\n";
     }
     
     public function addPlayer($player) 
@@ -569,7 +569,7 @@ class WorldServer
             $mob->setTarget($player);
             
             $this->broadcastAttacker($mob);
-            echo $mob->id . " is now attacking " . $player->id;
+            echo $mob->id . " is now attacking " . $player->id."\n";
         }
     }
     
@@ -586,7 +586,7 @@ class WorldServer
         } 
         else 
         {
-            echo "Unknown entity : " . $id;
+            echo "Unknown entity : $id\n";
         }
     }
     

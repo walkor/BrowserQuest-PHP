@@ -8,9 +8,6 @@ class Area
     public $y = 0;
     public $width = 0;
     public $height = 0;
-    /**
-     * @var WorldServer
-     */
     public $world = null;
     public $entities = array();
     public $hasCompletelyRespawned = false;
@@ -43,7 +40,6 @@ class Area
     
     public function removeFromArea($entity)
     {
-        //$index = array_search($entity->id, Utils::pluck($this->entities, 'id'));
         unset($this->entities[$entity->id]);
     }
     
