@@ -47,7 +47,7 @@ class Map
         // ??
         foreach($this->chestAreas as $id=>$item)
         {
-            $this->chestAreas[$id]['id'] = $id;
+            $this->chestAreas[$id]->id = $id;
         }
         
         // zone groups
