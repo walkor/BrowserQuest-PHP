@@ -9,8 +9,8 @@ class Drop
     public $item;
     public function __construct($mob, $item)
     {
-        $this->playerId = $mob;
-        $this->itemKind = $item ;
+        $this->mob = $mob;
+        $this->item = $item ;
     }
     
     public function serialize()
