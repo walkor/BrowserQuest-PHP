@@ -10,6 +10,7 @@ require_once __DIR__ . '/../../Workerman/Autoloader.php';
 
 // BrowserQuest Server
 $ws_worker = new Worker('Websocket://0.0.0.0:8000');
+$ws_worker->name = 'BrowserQuestWorker';
 $ws_worker->onWorkerStart = function($ws_worker)
 {
     $ws_worker->server = new \Server\Server();
@@ -43,10 +44,12 @@ $ws_worker->onConnect = function($connection) use ($ws_worker)
     }
 };
 
-// WebServer
+// 这里使用workerman的WebServer运行Web目录。Web目录也可以用nginx/Apache等容器运行
 $web = new WebServer("http://0.0.0.0:8787");
 
 $web->count = 6;
+
+$web->name = 'BrowserQuestWeb';
 
 $web->addRoot('www.your_domain.com', __DIR__.'/Web');
 
