@@ -105,9 +105,9 @@ class Mob extends Character
         return $playerId;
     }
     
-    public function forgetPlayer($playerId, $duration)
+    public function forgetPlayer($playerId, $duration = 0)
     {
-        $this->hatelist = Utils::reject($this->hatelist, function($obj) 
+        $this->hatelist = Utils::reject($this->hatelist, function($obj) use ($playerId)
         {
             return $obj->id == $playerId;
         });
