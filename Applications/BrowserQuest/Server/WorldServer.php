@@ -138,7 +138,7 @@ class WorldServer
                         $self->removePlayer($player);
                         $self->decrementPlayerCount();
                 
-                        if($self->removedCallback) 
+                        if(isset($self->removedCallback)) 
                         {
                             call_user_func($self->removedCallback);
                         }
