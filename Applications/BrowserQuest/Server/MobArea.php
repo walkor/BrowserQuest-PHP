@@ -33,7 +33,7 @@ class MobArea extends Area
         // @todo bind
         $mob->onMove(array($this->world, $this->world->onMobMoveCallback));
 
-        return mob;
+        return $mob;
     }
     
     public function respawnMob($mob, $delay)

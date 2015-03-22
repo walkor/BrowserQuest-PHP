@@ -10,7 +10,7 @@ class Chest extends Item
     }
     public function setItems($items)
     {
-        $this->items = items;
+        $this->items = $items;
     }
     public function getRandomItem()
     {
