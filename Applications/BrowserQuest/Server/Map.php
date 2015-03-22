@@ -193,7 +193,8 @@ class Map
     {
         if($group_id) 
         {
-            array_walk($this->getAdjacentGroupPositions($group_id), function($pos)use($callback) 
+            $groups = $this->getAdjacentGroupPositions($group_id);
+            array_walk($groups, function($pos)use($callback) 
             {
                 call_user_func($callback, $pos['x'].'-'.$pos['y']);
             });

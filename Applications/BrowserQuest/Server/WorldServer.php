@@ -685,7 +685,7 @@ class WorldServer
                 $mob->onRespawn(function() use ($mob, $self){
                     $mob->isDead = false;
                     $self->addMob($mob);
-                    if($mob->area && $mob->area instanceof ChestArea)
+                    if(!empty($mob->area) && $mob->area instanceof ChestArea)
                     {
                         $mob->area->addToArea($mob);
                     }
