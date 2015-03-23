@@ -918,34 +918,34 @@ class WorldServer
         
         if($this->zoneGroupsReady) 
         {
-            $this->map->forEachGroup(function($id) 
+            $this->map->forEachGroup(function($id) use($self)
             {
                 $spawns = array();
-                if($this->groups[$id]->incoming) 
+                if($self->groups[$id]->incoming) 
                 {
-                    foreach($this->groups[$id]->incoming as $entity)
+                    foreach($self->groups[$id]->incoming as $entity)
                     {
                         if($entity instanceof Player) 
                         {
-                            $this->pushToGroup($id, new Messages\Spawn($entity), $entity->id);
+                            $self->pushToGroup($id, new Messages\Spawn($entity), $entity->id);
                         } 
                         else 
                         {
-                            $this->pushToGroup($id, new Messages\Spawn($entity));
+                            $self->pushToGroup($id, new Messages\Spawn($entity));
                         }
                     }
-                    foreach($this->groups[$id]->incoming as $entity)
+                    foreach($self->groups[$id]->incoming as $entity)
                     {
                         if($entity instanceof Player) 
                         {
-                            $this->pushToGroup($id, new Messages\Spawn($entity), $entity->id);
+                            $self->pushToGroup($id, new Messages\Spawn($entity), $entity->id);
                         } 
                         else 
                         {
-                            $this->pushToGroup($id, new Messages\Spawn($entity));
+                            $self->pushToGroup($id, new Messages\Spawn($entity));
                         }
                     }
-                    $this->groups[$id]->incoming = array();
+                    $self->groups[$id]->incoming = array();
                 }
             });
         }
