@@ -13,6 +13,7 @@ class Player extends Character
     public $armorLevel = 0;
     public $connection;
     public $server;
+    public $weaponLevel = 0;
     
     public function __construct($connection, $worldServer)
     {
@@ -131,7 +132,7 @@ class Player extends Character
             {
                 $dmg = Formulas::dmg($this->weaponLevel, $mob->armorLevel);
                 
-                if($dmg > 0) 
+                if($dmg > 0 && is_callable(array($mob, 'receiveDamage')))
                 {
                     $mob->receiveDamage($dmg, $this->id);
                     $this->server->handleMobHate($mob->id, $this->id, $dmg);
