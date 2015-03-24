@@ -820,11 +820,11 @@ class WorldServer
                 $group->players = Utils::reject($group->players, function($id) use($entity) { return $id == $entity->id; });
             }
             
-            $this->map->forEachAdjacentGroup($entity->group, function($id) use ($entity, &$oldGroups) 
+            $this->map->forEachAdjacentGroup($entity->group, function($id) use ($entity, &$oldGroups, $self) 
             {
-                if(isset($this->groups[$id]->entities[$entity->id]))
+                if(isset($self->groups[$id]->entities[$entity->id]))
                 {
-                    unset($this->groups[$id]->entities[$entity->id]);
+                    unset($self->groups[$id]->entities[$entity->id]);
                     $oldGroups[] = $id;
                 }
             });
