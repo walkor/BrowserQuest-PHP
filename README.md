@@ -9,7 +9,7 @@ BrowserQuest server in PHP
 查看状态 ```php start.php status```  
 停止 ```php start.php stop```  
 
-## 说明 
+## 说明 - Description
 本游戏是由[BrowserQuest](https://github.com/mozilla/BrowserQuest)修改而来，主要是将后端nodejs部分用php（[workerman框架](https://github.com/walkor/workerman)）重写
 
 ## 在线演示 - Live Demo
