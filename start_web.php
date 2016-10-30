@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * This file is part of workerman.
  *
@@ -11,18 +11,20 @@
  * @link http://www.workerman.net/
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+use \Workerman\WebServer;
+use \Workerman\Worker;
 
-// Date.timezone
-if(!ini_get('date.timezone') )
+// 这里使用workerman的WebServer运行Web目录。Web目录也可以用nginx/Apache等容器运行
+$web = new WebServer("http://0.0.0.0:8787");
+
+$web->count = 2;
+
+$web->name = 'BrowserQuestWeb';
+
+$web->addRoot('www.your_domain.com', __DIR__.'/Web');
+
+// 如果不是在根目录启动，则运行runAll方法
+if(!defined('GLOBAL_START'))
 {
-    date_default_timezone_set('Asia/Shanghai');
+    Worker::runAll();
 }
-// Display errors.
-ini_set('display_errors', 'on');
-// Reporting all.
-error_reporting(E_ALL);
-
-// For onError callback.
-define('WORKERMAN_CONNECT_FAIL', 1);
-// For onError callback.
-define('WORKERMAN_SEND_FAIL', 2);

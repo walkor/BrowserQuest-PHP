@@ -11,14 +11,10 @@
  * @link http://www.workerman.net/
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
-use \Workerman\WebServer;
 use \Workerman\Worker;
 use \Server\Utils;
 use \Server\Player;
 use \Server\WorldServer;
-
-// 自动加载类
-require_once __DIR__ . '/../../Workerman/Autoloader.php';
 
 // BrowserQuest Server
 $ws_worker = new Worker('Websocket://0.0.0.0:8000');
@@ -55,16 +51,6 @@ $ws_worker->onConnect = function($connection) use ($ws_worker)
     }
 };
 
-// 这里使用workerman的WebServer运行Web目录。Web目录也可以用nginx/Apache等容器运行
-$web = new WebServer("http://0.0.0.0:8787");
-
-$web->count = 6;
-
-$web->name = 'BrowserQuestWeb';
-
-$web->addRoot('www.your_domain.com', __DIR__.'/Web');
-
-// 如果不是在根目录启动，则运行runAll方法
 if(!defined('GLOBAL_START'))
 {
     Worker::runAll();
