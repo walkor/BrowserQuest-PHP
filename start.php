@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * This file is part of workerman.
  *
@@ -13,6 +13,8 @@
  */
 use \Workerman\Worker;
 
+define('GLOBAL_START', true);
+
 // 自动加载类
 require_once __DIR__ . '/vendor/autoload.php';
 // socket服务端文件
@@ -20,9 +22,4 @@ require_once __DIR__ . '/start_worker.php';
 // web服务
 require_once __DIR__ . '/start_web.php';
 
-
-// 如果不是在根目录启动，则运行runAll方法
-if(!defined('GLOBAL_START'))
-{
-    Worker::runAll();
-}
+Worker::runAll();
