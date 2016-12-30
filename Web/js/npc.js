@@ -3,25 +3,25 @@ define(['character'], function(Character) {
 
     var NpcTalk = {
         "guard": [
-            "嘿，你好",
-            "我们不查身份证",
-            "你不是我要找的人",
-            "一直走，一直走下去。。",
-            "我不喜欢雾霾天。。"
+            "嘿，你好。",
+            "我们不查身份证。",
+            "你不是我要找的人。",
+            "一直走，一直走下去···",
+            "我不喜欢雾霾天···"
         ],
     
         "king": [
             "嘿, 我是这里的国王。",
-            "我在这里奔跑",
-            "像BOSS一样",
-            "我对人民讲话",
-            "像BOSS一样",
-            "我戴着王冠",
-            "像BOSS一样",
-            "我整天无所事事",
-            "像BOSS一样",
-            "现在让我静静",
-            "像BOSS一样"
+            "我在这里奔跑，",
+            "像BOSS一样。",
+            "我对人民讲话，",
+            "像BOSS一样。",
+            "我戴着王冠，",
+            "像BOSS一样。",
+            "我整天无所事事，",
+            "像BOSS一样。",
+            "现在让我静静，",
+            "像BOSS一样。"
         ],
     
         "villagegirl": [
@@ -35,17 +35,17 @@ define(['character'], function(Character) {
     
         "villager": [
             // "Howdy stranger. Do you like poetry?",
-            "你好啊，新来的！喜欢诗歌吗？",
+            "你好啊，新来的！是妹子吗？",
             // "Roses are red, violets are blue...",
-            "正如你所见，玫瑰是红的，天空是蓝的。",
+            "如你所见，玫瑰是红的，天空是蓝的。",
             // "I like hunting rats, and so do you...",
-            "我喜欢猎杀老鼠，你也一样吧，骚年。",
+            "我喜欢杀老鼠，你也一样吧，少年。",
             // "The rats are dead, now what to do?",
             "老鼠已经死了，现在该干点什么呢？",
             // "To be honest, I have no clue.",
-            "说实话，我不知道。。",
+            "说实话，我不知道···",
             // "Maybe the forest, could interest you...",
-            "也许森林, 可以是你着迷。",
+            "也许森林, 可以使你着迷。",
             // "or instead, cook a rat stew."
             "或者，施展你的厨艺，烤一只老鼠如何？"
         ],
@@ -56,7 +56,7 @@ define(['character'], function(Character) {
             // "That's impossible",
             "那是不可能的！",
             // "Instead, only try to realize the truth...",
-            "相反，只去尝试了解事情的真像。",
+            "相反，去尝试了解事情的真相吧。",
             // "There is no sword."
             "并没有大宝剑。"
         ],
@@ -109,11 +109,11 @@ define(['character'], function(Character) {
             // "nyan nyan nyan nyan nyan",
             "喵？",
             // "nyan nyan nyan nyan nyan nyan nyan",
-            "喵！",
+            "喵？喵？",
             // "nyan nyan nyan nyan nyan nyan",
-            "喵。",
+            "喵？喵？喵？",
             // "nyan nyan nyan nyan nyan nyan nyan nyan"
-            "喵~~"
+            "喵？喵？喵？喵？"
         ],
         
         "beachnpc": [
@@ -198,7 +198,7 @@ define(['character'], function(Character) {
             // "Want to see the source code?",
             "别装了，少年，我知道你想看源码。",
             // 'Check out <a target="_blank" href="http://github.com/mozilla/BrowserQuest">the repository on GitHub</a>'
-            '呐~ 就在这里哦 <a target="_blank" href="http://github.com/mozilla/BrowserQuest">the repository on GitHub</a>'
+            '呐~ 就在这里哦 <a target="_blank" href="https://github.com/redoc/zero">the repository on GitHub</a>'
         ],
         
         "coder": [
@@ -238,7 +238,7 @@ define(['character'], function(Character) {
             // "lorem ipsum",
             "还是那句话：",
             // "lorem ipsum"
-            "Php是世界上最好的语言！"
+            "PHP是世界上最好的语言！"
         ]
     };
 

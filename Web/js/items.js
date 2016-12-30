@@ -6,14 +6,14 @@ define(['item'], function(Item) {
         Sword2: Item.extend({
             init: function(id) {
                 this._super(id, Types.Entities.SWORD2, "weapon");
-                this.lootMessage = "你获得了沉重的铁剑";
+                this.lootMessage = "你获得了一把沉重的铁剑";
             },
         }),
 
         Axe: Item.extend({
             init: function(id) {
                 this._super(id, Types.Entities.AXE, "weapon");
-                this.lootMessage = "你获得了锋利的斧子";
+                this.lootMessage = "你获得了一把锋利的斧子";
             },
         }),
 
@@ -27,21 +27,21 @@ define(['item'], function(Item) {
         BlueSword: Item.extend({
             init: function(id) {
                 this._super(id, Types.Entities.BLUESWORD, "weapon");
-                this.lootMessage = "你获得了小仙女的魔法棒";
+                this.lootMessage = "你获得了一个小仙女的魔法棒";
             },
         }),
 
         GoldenSword: Item.extend({
             init: function(id) {
                 this._super(id, Types.Entities.GOLDENSWORD, "weapon");
-                this.lootMessage = "你获得了无敌的终极之剑";
+                this.lootMessage = "你获得了一把无敌的终极之剑";
             },
         }),
 
         MorningStar: Item.extend({
             init: function(id) {
                 this._super(id, Types.Entities.MORNINGSTAR, "weapon");
-                this.lootMessage = "你获得了启明星";
+                this.lootMessage = "你获得了一颗启明星";
             },
         }),
 
@@ -97,7 +97,7 @@ define(['item'], function(Item) {
         Burger: Item.extend({
             init: function(id) {
                 this._super(id, Types.Entities.BURGER, "object");
-                this.lootMessage = "你可以吃一个老鼠汉堡";
+                this.lootMessage = "你居然吃了一个老鼠汉堡";
             },
         }),
 

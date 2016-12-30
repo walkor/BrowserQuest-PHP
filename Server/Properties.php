@@ -140,7 +140,7 @@ class Properties
                     'axe'=> 10,
                     'firepotion'=> 5
                 ),
-                'hp'=> 80,
+                'hp'=> 100,
                 'armor'=> 2,
                 'weapon'=> 1
             ),
@@ -151,7 +151,7 @@ class Properties
                     'platearmor'=> 20,
                     'firepotion'=> 5
                 ),
-                'hp'=> 100,
+                'hp'=> 200,
                 'armor'=> 2,
                 'weapon'=> 6
             ),
@@ -160,7 +160,7 @@ class Properties
                 'drops'=> array(
                     'goldensword'=> 100
                 ),
-                'hp'=> 700,
+                'hp'=> 1000,
                 'armor'=> 6,
                 'weapon'=> 7
             )

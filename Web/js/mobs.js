@@ -141,9 +141,9 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.moveSpeed = 300;
                 this.atkSpeed = 50;
                 this.idleSpeed = 400;
-                this.atkRate = 2000;
+                this.atkRate = 1500;
                 this.attackCooldown = new Timer(this.atkRate);
-        		this.aggroRange = 3;
+        		this.aggroRange = 5;
             },
             
             idle: function(orientation) {

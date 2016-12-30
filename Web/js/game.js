@@ -1339,18 +1339,18 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     var mobName = Types.getKindAsString(kind);
                     console.log('>>', kind, mobName);
                     var NAMES = {
-                        'rat': '老鼠',
+                        'rat': '小老鼠',
                         'skeleton': '骷髅战士',
                         'goblin': '哥布林',
                         'ogre': '食人魔',
                         'spectre': '幽灵',
-                        'deathknight': '死亡骑士',
-                        'crab': '螃蟹',
-                        'snake': '青蛇',
-                        'bat': '蝙蝠',
-                        'wizard': '巫师',
+                        'deathknight': '亡灵骑士',
+                        'crab': '大螃蟹',
+                        'snake': '小青蛇',
+                        'bat': '灰蝙蝠',
+                        'wizard': '邪恶巫师',
                         'eye': '地狱之眼',
-                        'skeleton2': '大骷髅战士'
+                        'skeleton2': '强化骷髅战士'
                     };
                     mobName = NAMES[mobName] || mobName;
                     
