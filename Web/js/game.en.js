@@ -171,120 +171,120 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.achievements = {
                 A_TRUE_WARRIOR: {
                     id: 1,
-                    name: "真的勇士",
-                    desc: "寻找一件新武器"
+                    name: "A True Warrior",
+                    desc: "Find a new weapon"
                 },
                 INTO_THE_WILD: {
                     id: 2,
-                    name: "出门远行",
-                    desc: "在村庄以外冒险"
+                    name: "Into the Wild",
+                    desc: "Venture outside the village"
                 },
                 ANGRY_RATS: {
                     id: 3,
-                    name: "愤怒的老鼠",
-                    desc: "杀死10只可怜的老鼠",
+                    name: "Angry Rats",
+                    desc: "Kill 10 rats",
                     isCompleted: function() {
                         return self.storage.getRatCount() >= 10;
                     }
                 },
                 SMALL_TALK: {
                     id: 4,
-                    name: "吐露心声",
-                    desc: "与一个NPC交谈"
+                    name: "Small Talk",
+                    desc: "Talk to a non-player character"
                 },
                 FAT_LOOT: {
                     id: 5,
-                    name: "发哥之战",
-                    desc: "获得一件新盔甲"
+                    name: "Fat Loot",
+                    desc: "Get a new armor set"
                 },
                 UNDERGROUND: {
                     id: 6,
-                    name: "地下城勇士",
-                    desc: "探索过一个洞穴"
+                    name: "Underground",
+                    desc: "Explore at least one cave"
                 },
                 AT_WORLDS_END: {
                     id: 7,
-                    name: "天涯海角",
-                    desc: "探索过南部海滩"
+                    name: "At World's End",
+                    desc: "Reach the south shore"
                 },
                 COWARD: {
                     id: 8,
-                    name: "胆小鬼",
-                    desc: "顺利逃脱过敌人的追杀"
+                    name: "Coward",
+                    desc: "Successfully escape an enemy"
                 },
                 TOMB_RAIDER: {
                     id: 9,
-                    name: "盗墓笔记",
-                    desc: "探索过墓园"
+                    name: "Tomb Raider",
+                    desc: "Find the graveyard"
                 },
                 SKULL_COLLECTOR: {
                     id: 10,
-                    name: "九阴真经",
-                    desc: "杀死10个凶猛的骷髅战士",
+                    name: "Skull Collector",
+                    desc: "Kill 10 skeletons",
                     isCompleted: function() {
                         return self.storage.getSkeletonCount() >= 10;
                     }
                 },
                 NINJA_LOOT: {
                     id: 11,
-                    name: "火影忍者",
-                    desc: "不通过战斗获得一件物品"
+                    name: "Ninja Loot",
+                    desc: "Get hold of an item you didn't fight for"
                 },
                 NO_MANS_LAND: {
                     id: 12,
-                    name: "无人区",
-                    desc: "穿越沙漠地带"
+                    name: "No Man's Land",
+                    desc: "Travel through the desert"
                 },
                 HUNTER: {
                     id: 13,
-                    name: "城市猎人",
-                    desc: "杀死50个敌人",
+                    name: "Hunter",
+                    desc: "Kill 50 enemies",
                     isCompleted: function() {
                         return self.storage.getTotalKills() >= 50;
                     }
                 },
                 STILL_ALIVE: {
                     id: 14,
-                    name: "不死之身",
-                    desc: "复活角色五次",
+                    name: "Still Alive",
+                    desc: "Revive your character five times",
                     isCompleted: function() {
                         return self.storage.getTotalRevives() >= 5;
                     }
                 },
                 MEATSHIELD: {
                     id: 15,
-                    name: "肉盾",
-                    desc: "造成5000点伤害",
+                    name: "Meatshield",
+                    desc: "Take 5,000 points of damage",
                     isCompleted: function() {
                         return self.storage.getTotalDamageTaken() >= 5000;
                     }
                 },
                 HOT_SPOT: {
                     id: 16,
-                    name: "东京热",
-                    desc: "进入火山地带"
+                    name: "Hot Spot",
+                    desc: "Enter the volcanic mountains"
                 },
                 HERO: {
                     id: 17,
-                    name: "超级英雄",
-                    desc: "击败最终BOSS"
+                    name: "Hero",
+                    desc: "Defeat the final boss"
                 },
                 FOXY: {
                     id: 18,
-                    name: "绝色狐狸",
-                    desc: "获得无敌火狐套装",
+                    name: "Foxy",
+                    desc: "Find the Firefox costume",
                     hidden: true
                 },
                 FOR_SCIENCE: {
                     id: 19,
-                    name: "月光宝盒",
-                    desc: "进入传送门",
+                    name: "For Science",
+                    desc: "Enter into a portal",
                     hidden: true
                 },
                 RICKROLLD: {
                     id: 20,
-                    name: "迈克学摇滚",
-                    desc: "上一堂音乐课",
+                    name: "Rickroll'd",
+                    desc: "Take some singing lessons",
                     hidden: true
                 }
             };
@@ -792,9 +792,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.storage.savePlayer(self.renderer.getPlayerImage(),
                                             self.player.getSpriteName(),
                                             self.player.getWeaponName());
-                    self.showNotification("欢迎来到 BrowserQuest！");
+                    self.showNotification("Welcome to BrowserQuest!");
                 } else {
-                    self.showNotification("欢迎回到 BrowserQuest！");
+                    self.showNotification("Welcome back to BrowserQuest!");
                     self.storage.setPlayerName(name);
                 }
         
@@ -1337,30 +1337,26 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
                 self.client.onPlayerKillMob(function(kind) {
                     var mobName = Types.getKindAsString(kind);
-                    console.log('>>', kind, mobName);
-                    var NAMES = {
-                        'rat': '小老鼠',
-                        'skeleton': '骷髅战士',
-                        'goblin': '哥布林',
-                        'ogre': '食人魔',
-                        'spectre': '幽灵',
-                        'deathknight': '亡灵骑士',
-                        'crab': '大螃蟹',
-                        'snake': '小青蛇',
-                        'bat': '灰蝙蝠',
-                        'wizard': '邪恶巫师',
-                        'eye': '地狱之眼',
-                        'skeleton2': '强化骷髅战士'
-                    };
-                    mobName = NAMES[mobName] || mobName;
+                    
+                    if(mobName === 'skeleton2') {
+                        mobName = 'greater skeleton';
+                    }
+                    
+                    if(mobName === 'eye') {
+                        mobName = 'evil eye';
+                    }
+                    
+                    if(mobName === 'deathknight') {
+                        mobName = 'death knight';
+                    }
                     
                     if(mobName === 'boss') {
-                        self.showNotification("你杀死了骷髅王！");
+                        self.showNotification("You killed the skeleton king");
                     } else {
                         if(_.include(['a', 'e', 'i', 'o', 'u'], mobName[0])) {
-                            self.showNotification("你杀死了一只" + mobName);
+                            self.showNotification("You killed an " + mobName);
                         } else {
-                            self.showNotification("你杀死了一只" + mobName);
+                            self.showNotification("You killed a " + mobName);
                         }
                     }
                     

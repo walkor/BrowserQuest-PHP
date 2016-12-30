@@ -186,7 +186,7 @@ define(['jquery', 'app'], function($, App) {
     		});
     		
     		game.onDisconnect(function(message) {
-    		    $('#death').find('p').html(message+"<em>Please reload the page.</em>");
+    		    $('#death').find('p').html(message+"<em>请刷新页面。</em>");
     		    $('#respawn').hide();
     		});
 	
@@ -218,16 +218,16 @@ define(['jquery', 'app'], function($, App) {
     		    
     		    $("#instance-population").find("span").text(worldPlayers);
     		    if(worldPlayers == 1) {
-    		        setWorldPlayersString("player");
+    		        setWorldPlayersString("玩家");
     		    } else {
-    		        setWorldPlayersString("players");
+    		        setWorldPlayersString("玩家");
     		    }
     		    
     		    $("#world-population").find("span").text(totalPlayers);
     		    if(totalPlayers == 1) {
-    		        setTotalPlayersString("player");
+    		        setTotalPlayersString("玩家");
     		    } else {
-    		        setTotalPlayersString("players");
+    		        setTotalPlayersString("玩家");
     		    }
     		});
 	
