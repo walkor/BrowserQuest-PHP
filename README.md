@@ -8,6 +8,8 @@ BrowserQuest server in PHP
 
 2、composer install 
 
+3、更改配置 Web/config/config_local.json 中的host为当前服务器ip地址或者域名
+
 ## Lniux 启动停止 - Start and Stop for Linux
 以debug模式启动 ```php start.php start```   
 以daemon模式启动 ```php start.php start -d```  
