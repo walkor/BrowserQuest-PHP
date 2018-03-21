@@ -14,6 +14,9 @@
 use \Workerman\WebServer;
 use \Workerman\Worker;
 
+// 自动加载类
+require_once __DIR__ . '/vendor/autoload.php';
+
 // 这里使用workerman的WebServer运行Web目录。Web目录也可以用nginx/Apache等容器运行
 $web = new WebServer("http://0.0.0.0:8787");
 
