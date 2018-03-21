@@ -11,14 +11,15 @@ BrowserQuest server in PHP
 3、更改配置 Web/config/config_local.json 中的host为当前服务器ip地址或者域名
 
 ## Lniux 启动停止 - Start and Stop for Linux
-以debug模式启动 ```php start.php start```   
-以daemon模式启动 ```php start.php start -d```  
-查看状态 ```php start.php status```  
-停止 ```php start.php stop``` 
+以debug模式启动 ```php start.php start``` <br>  
+以daemon模式启动 ```php start.php start -d```  <br>  
+查看状态 ```php start.php status```   <br> 
+停止 ```php start.php stop```  <br> 
 
 ## Windows 启动停止 - Start and Stop for Windows
-双击 start_for_win.bat   
-Double click start_for_win.bat
+双击 start_for_win.bat启动，按ctrl+c停止 <br> 
+Double click start_for_win.bat for start.
+Press ctrl + c to stop.
 
 ## 说明 - Description
 本游戏是由[BrowserQuest](https://github.com/mozilla/BrowserQuest)修改而来，主要是将后端nodejs部分用php（[workerman框架](https://github.com/walkor/workerman)）重写
