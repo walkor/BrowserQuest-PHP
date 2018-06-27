@@ -457,6 +457,6 @@ class Player extends Character
     public function timeout()
     {
         $this->connection->send('timeout');
-        $this->connection->close('Player was idle for too long');
+        echo "Player was idle for too long\r\n";
     }
 }
