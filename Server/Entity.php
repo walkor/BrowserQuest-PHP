@@ -23,7 +23,7 @@ class Entity
     
     public function __construct($id, $type, $kind, $x, $y)
     {
-        $this->id = $id;
+        $this->id = intval($id);
         $this->type = $type;
         $this->kind = $kind;
         $this->x = $x;
