@@ -22,7 +22,7 @@
             },
             "require": {
                 "php": ">=5.3",
-                "ext-pcntl": "8.0"
+                "ext-pcntl": "8.0.8"
             },
             "suggest": {
                 "ext-event": "For better performance. "
