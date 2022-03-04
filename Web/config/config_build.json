@@ -1,4 +1,4 @@
 {
-    "host": "Set production websocket host here",
+    "host": "static-website-service-zuunx.ondigitalocean.app",
     "port": 8000
 }

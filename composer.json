@@ -7,5 +7,6 @@
     "require": {
         "workerman/workerman" : "~4.0.0",
         "ext-pcntl": "8.0.8"
+        
     }
 }

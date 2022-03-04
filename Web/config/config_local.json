@@ -1,5 +1,5 @@
 {
-    "host": "demos.workerman.net",
+    "host": "static-website-service-zuunx.ondigitalocean.app",
     "port": 8000,
     "dispatcher": false
 }
